@@ -1,0 +1,14 @@
+footer.footer {
+  padding: $spacer $spacer*2;
+  direction: ltr;
+  background: $footer-bg;
+  height: $footer-height;
+
+  ul {
+    margin-bottom: 0;
+  }
+
+  @include media-breakpoint-down(md) {
+    width: 100vw;
+  }
+}

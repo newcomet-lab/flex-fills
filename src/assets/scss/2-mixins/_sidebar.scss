@@ -1,0 +1,18 @@
+@mixin sidebar-link-hover {
+  color: $light-white-color;
+  background: #fbfaff33;
+  border-color: #d8d7db1a;
+
+  svg {
+    path {
+      fill: $light-white-color;
+    }
+
+    &.account {
+      path {
+        fill: none;
+        stroke: $light-white-color;
+      }
+    }
+  }
+}

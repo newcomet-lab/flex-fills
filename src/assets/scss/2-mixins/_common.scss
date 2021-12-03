@@ -1,0 +1,43 @@
+@mixin text-with-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+}
+
+@mixin with-thin-scrollbar {
+  /* override system scrollbar */
+  &::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+    margin: 0 2px;
+
+    &-track {
+      background: transparent;
+    }
+    &-thumb {
+      background: $dark-text-color;
+      border-radius: 7px;
+    }
+  }
+  /* firefox only */
+  scrollbar-color: $dark-text-color transparent;
+  scrollbar-width: thin;
+}
+
+@mixin navbar-nav-position {
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+
+  + .navbar-nav {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+@mixin autofill-input-style {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: $light-white-color !important;
+}

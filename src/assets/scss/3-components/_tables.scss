@@ -1,0 +1,49 @@
+.table {
+	thead, tbody, tfoot, tr, td, th {
+		border-color: $table-border-color;
+	}
+
+	> :not(:last-child) > :last-child > * {
+		border-color: $table-border-color;
+	}
+
+	> tbody > tr > td {
+		vertical-align: middle;
+	}
+
+	&-danger {
+		$danger10: rgba($danger, 0.1);
+		$danger20: rgba($danger, 0.2);
+		--bs-table-bg: #{$danger10};
+		--bs-table-active-bg: #{$danger20};
+		--bs-table-active-color: #{$light-white-color};
+		--bs-table-hover-bg: #{$danger20};
+		--bs-table-hover-color: #{$light-white-color};
+		color: $dark-text-color;
+	}
+
+	&-success {
+		$success10: rgba($success, 0.1);
+		$success20: rgba($success, 0.2);
+		--bs-table-bg: #{$success10};
+		--bs-table-active-bg: #{$success20};
+		--bs-table-active-color: #{$light-white-color};
+		--bs-table-hover-bg: #{$success20};
+		--bs-table-hover-color: #{$light-white-color};
+		color: $dark-text-color;
+	}
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+	$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+	.table#{$infix}-sm {
+		@include media-breakpoint-down($breakpoint) {
+			> :not(caption) > * > * {
+				padding:.3rem !important;
+			}
+		}
+	}
+	.table-responsive#{$infix} {
+		@include with-thin-scrollbar;
+	}
+}
