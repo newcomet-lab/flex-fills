@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   userForm!: FormGroup;
   submitted = false;
@@ -15,8 +15,18 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(40)
+        ]
+      ],
+      confirmPassword: ['', Validators.required],
+      acceptTerms: [false, Validators.requiredTrue]
     });
   }
 
@@ -36,4 +46,5 @@ export class LoginComponent implements OnInit {
     this.submitted = false;
     this.userForm.reset();
   }
+
 }
