@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Validation from '../../utils/validation';
 
 @Component({
   selector: 'app-register',
@@ -15,8 +16,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      name: [
+        '',
+        Validators.required
+      ],
+      email: [
+        '',
+        [Validators.required, Validators.email]
+      ],
       password: [
         '',
         [
@@ -25,8 +32,18 @@ export class RegisterComponent implements OnInit {
           Validators.maxLength(40)
         ]
       ],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(40)
+        ]
+      ],
       acceptTerms: [false, Validators.requiredTrue]
+    },
+    {
+      validators: [Validation.match('password', 'confirmPassword')]
     });
   }
 
