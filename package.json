@@ -41,6 +41,7 @@
     "@angular-devkit/build-angular": "~13.0.4",
     "@angular/cli": "~13.0.4",
     "@angular/compiler-cli": "~13.0.0",
+    "@types/feather-icons": "^4.7.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "enhanced-resolve": "^5.8.3",

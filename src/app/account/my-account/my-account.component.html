@@ -1,0 +1,231 @@
+<div class="container-fluid p-0">
+  <div class="mb-4">
+    <h3>Account</h3>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-10">
+      <div class="form-field-container">
+        <div class="form-field">
+          <div class="form-field-label">Username</div>
+          <div class="form-field-value">InnaBisler</div>
+        </div>
+        <a
+          class="change-link"
+          (click)="openModal(changeUsername)">
+          Change
+        </a>
+        <div
+          class="modal"
+          tabindex="-1"
+          #changeUsername id="changeUsername"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-sm"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <i data-feather="x"></i>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="modal-body-title text-center">Security Check</div>
+                <p class="mb-0 text-center">
+                  To change username or email, please contact support
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="form-field-container">
+        <div class="form-field">
+          <div class="form-field-label">Password</div>
+          <div class="form-field-value">*********</div>
+        </div>
+        <a
+          class="change-link"
+          (click)="openModal(changePassword)">
+          Change
+        </a>
+        <div
+          class="modal"
+          tabindex="-1"
+          #changePassword id="changePassword"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <i data-feather="x"></i>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="modal-body-title">Change Your Password</div>
+                <div class="row mb-3">
+                  <div class="col-12">
+                    As a security precaution, resetting your password will put
+                    your account on a one day withdrawal hold
+                  </div>
+                </div>
+                <form [formGroup]="pwChangeForm" (ngSubmit)="onPwChange()">
+                  <div class="row mb-2">
+                    <div class="col-12 form-group">
+                      <input
+                        type="password"
+                        formControlName="currentPassword"
+                        placeholder="Current Password"
+                        class="form-control form-control-lg"
+                        [ngClass]="{
+                          'is-invalid': pwChangeSubmitted && getform['currentPassword'].errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          pwChangeSubmitted &&
+                          (getform['currentPassword'].errors ||
+                            getform['currentPassword'].touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            getform['currentPassword'].errors
+                              ? getform['currentPassword'].errors['required']
+                              : false
+                          "
+                        >
+                          Current Password is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-12 form-group">
+                      <input
+                        type="password"
+                        formControlName="newPassword"
+                        placeholder="New Password"
+                        class="form-control form-control-lg"
+                        [ngClass]="{
+                          'is-invalid': pwChangeSubmitted && getform['newPassword'].errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          pwChangeSubmitted &&
+                          (getform['newPassword'].errors ||
+                            getform['newPassword'].touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            getform['newPassword'].errors
+                              ? getform['newPassword'].errors['required']
+                              : false
+                          "
+                        >
+                          New Password is required
+                        </div>
+                        <div
+                          *ngIf="
+                            getform['newPassword'].errors
+                              ? getform['newPassword'].errors['minlength']
+                              : false
+                          "
+                        >
+                          Password must be at least 6 characters
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-12 form-group">
+                      <input
+                        type="password"
+                        formControlName="confirmPassword"
+                        placeholder="Confirm New Password"
+                        class="form-control form-control-lg"
+                        [ngClass]="{
+                          'is-invalid':
+                            pwChangeSubmitted && getform['confirmPassword'].errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          pwChangeSubmitted &&
+                          (getform['confirmPassword'].errors ||
+                            getform['confirmPassword'].touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            getform['confirmPassword'].errors
+                              ? getform['confirmPassword'].errors['required']
+                              : false
+                          "
+                        >
+                          Password is required
+                        </div>
+                        <div
+                            *ngIf="
+                              getform['confirmPassword'].errors
+                                ? getform['confirmPassword'].errors['matching']
+                                : false
+                            "
+                          >
+                          Confirm Password does not match
+                        </div>
+                        <div
+                          *ngIf="
+                            getform['confirmPassword'].errors
+                              ? getform['confirmPassword'].errors['minlength']
+                              : false
+                          "
+                        >
+                          Password must be at least 6 characters
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-5">
+                    <div class="col-12 text-end">
+                      <button class="btn btn-lg flex-fills-btn" type="submit">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="form-field-container">
+        <div class="form-field">
+          <div class="form-field-label">Email</div>
+          <div class="form-field-value">Inna.Bisler@mail.ru</div>
+        </div>
+        <a href="#" class="change-link">Change</a>
+      </div>
+    </div>
+  </div>
+</div>

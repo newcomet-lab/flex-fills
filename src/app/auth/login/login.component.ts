@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +12,16 @@ export class LoginComponent implements OnInit {
   userForm!: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private route:Router) { }
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
       email: [
         '',
-        [Validators.required, Validators.email]
+        [
+          Validators.required,
+          Validators.email
+        ]
       ],
       password: [
         '',
@@ -39,7 +43,9 @@ export class LoginComponent implements OnInit {
     if (!this.userForm.valid) {
       return;
     }
-    alert('SUCCESS' + JSON.stringify(this.userForm.value));
+    console.log('SUCCESS' + JSON.stringify(this.userForm.value));
+
+    this.route.navigate(['/auth/login/2fa']);
   }
 
   onReset() {

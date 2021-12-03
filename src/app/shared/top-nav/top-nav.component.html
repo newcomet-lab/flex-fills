@@ -1,0 +1,254 @@
+<nav class="navbar navbar-expand-lg">
+  <a class="sidebar-toggle js-sidebar-toggle d-lg-none">
+    <i class="hamburger align-self-center"></i>
+  </a>
+
+  <a class="sidebar-brand" routerLink="index.html">
+    <img src="/assets/img/logo.png" alt="logo flex fills" />
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarCollapse"
+    aria-controls="navbarCollapse"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon">
+      <i class="align-middle" data-feather="layers"></i>
+    </span>
+  </button>
+
+  <div class="navbar-collapse collapse" id="navbarCollapse">
+    <ul class="navbar-nav navbar-menu-links-container">
+      <li class="nav-item">
+        <a class="nav-btn" routerLink="/markets" routerLinkActive="active">
+          <svg
+            class="markets-icon"
+            width="28"
+            height="23"
+            viewBox="0 0 28 23"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.04177 15.5589L10.361 9.54783L11.2272 10.9488L0.866194 17.3549L1.04177 15.5589Z"
+              fill="#7C7587"
+            />
+            <rect
+              width="5.94809"
+              height="1.65617"
+              transform="matrix(0.829815 0.558039 -0.55804 0.829814 10.5059 9.51013)"
+              fill="#7C7587"
+            />
+            <rect
+              width="12.4547"
+              height="1.56859"
+              transform="matrix(-0.733559 0.679626 -0.679624 -0.733561 23.2305 5.68591)"
+              fill="#7C7587"
+            />
+            <path
+              d="M25.7686 2.22644L24.5313 7.33162L20.6662 3.47531L25.7686 2.22644Z"
+              fill="#7C7587"
+            />
+            <path
+              d="M1.89307 19.5543L6.27413 17.15V22.9736H1.89307V19.5543Z"
+              fill="#7C7587"
+            />
+            <path
+              d="M8.30469 16.0281L10.5486 14.3718L12.6857 15.6541V22.9202H8.30469V16.0281Z"
+              fill="#7C7587"
+            />
+            <path
+              d="M14.502 16.7229L18.9899 13.0364V15.7078V22.9739H14.6088L14.502 16.7229Z"
+              fill="#7C7587"
+            />
+            <path
+              d="M21.127 11.0593L23.3175 8.92224L25.508 11.0593V22.9737H21.127V11.0593Z"
+              fill="#7C7587"
+            />
+          </svg>
+          Markets
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-btn" routerLink="/trade" routerLinkActive="active">
+          <svg
+            class="trade-icon"
+            width="23"
+            height="24"
+            viewBox="0 0 23 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.2865 11.8216C15.0028 11.4412 14.5747 11.18 14.0022 11.038C14.7312 10.6524 15.0516 9.99802 14.9636 9.0747C14.9342 8.73988 14.845 8.4497 14.6957 8.20374C14.5463 7.95773 14.3447 7.75995 14.0901 7.61033C13.8357 7.46053 13.5591 7.34649 13.2608 7.26786C12.9624 7.18924 12.6198 7.13216 12.2333 7.09669V5.1792H11.1032V7.04341C10.9075 7.04341 10.6091 7.04847 10.208 7.05863V5.1792H9.07773V7.09669C8.91622 7.10178 8.67897 7.10436 8.36586 7.10436L6.81006 7.09669V8.34459H7.62461C7.99646 8.34459 8.21418 8.5171 8.27777 8.86199V11.0458C8.32676 11.0458 8.36586 11.0484 8.39524 11.0535H8.27777V14.1122C8.23867 14.3709 8.09681 14.5003 7.85215 14.5003H7.03765L6.81011 15.8928H8.2779C8.37087 15.8928 8.50533 15.8941 8.68154 15.8964C8.85764 15.8989 8.98969 15.9002 9.07778 15.9002V17.8405H10.2082V15.923C10.4136 15.9282 10.7121 15.9307 11.1035 15.9307V17.8405H12.2336V15.9002C12.6348 15.8799 12.9907 15.8421 13.3013 15.7861C13.612 15.7301 13.9093 15.6428 14.193 15.5235C14.4767 15.4043 14.7139 15.2559 14.9047 15.0783C15.0956 14.9009 15.2532 14.6751 15.3782 14.4011C15.5028 14.1271 15.5824 13.8101 15.6165 13.4499C15.6804 12.7449 15.5702 12.2021 15.2865 11.8216ZM10.2299 8.42806C10.2642 8.42806 10.3608 8.42678 10.5198 8.42423C10.6789 8.42161 10.811 8.41911 10.9161 8.41655C11.0214 8.41404 11.1632 8.42039 11.3419 8.43561C11.5205 8.45082 11.6709 8.47116 11.7932 8.49648C11.9154 8.52179 12.0501 8.56366 12.1968 8.622C12.3437 8.68029 12.461 8.75134 12.549 8.83502C12.6371 8.91871 12.7117 9.02529 12.7727 9.15465C12.834 9.28399 12.8646 9.43235 12.8646 9.59972C12.8646 9.74177 12.8426 9.87116 12.7986 9.98789C12.7547 10.1045 12.6885 10.2022 12.6005 10.2808C12.5125 10.3595 12.4219 10.428 12.3289 10.4863C12.236 10.5446 12.1173 10.5916 11.973 10.627C11.8287 10.6626 11.7027 10.6905 11.5952 10.7107C11.4875 10.731 11.353 10.745 11.1915 10.7526C11.03 10.7602 10.9077 10.7653 10.8245 10.7678C10.7413 10.7703 10.6276 10.7703 10.4832 10.7678C10.3388 10.7653 10.2545 10.764 10.23 10.764V8.42804H10.2299V8.42806ZM13.316 13.6097C13.2694 13.7265 13.2096 13.828 13.1363 13.9143C13.0628 14.0004 12.9661 14.0765 12.8463 14.1424C12.7265 14.2084 12.6102 14.2616 12.4978 14.3022C12.3852 14.3429 12.2494 14.3782 12.0905 14.4088C11.9313 14.4392 11.792 14.4607 11.672 14.4734C11.5522 14.4862 11.4091 14.4963 11.2427 14.5039C11.0764 14.5114 10.9467 14.5153 10.8538 14.5153C10.7608 14.5153 10.6433 14.5139 10.5015 14.5114C10.3595 14.509 10.2691 14.5077 10.2299 14.5077V11.9358C10.269 11.9358 10.3852 11.9333 10.5785 11.9281C10.7718 11.923 10.9295 11.9207 11.0518 11.9207C11.1741 11.9207 11.343 11.9281 11.5584 11.9435C11.7735 11.9586 11.9545 11.9813 12.1014 12.0117C12.2482 12.0422 12.4083 12.0891 12.5821 12.1526C12.7557 12.2159 12.8965 12.2933 13.0041 12.3846C13.1118 12.4761 13.2022 12.5925 13.2756 12.7346C13.3491 12.8766 13.3858 13.039 13.3858 13.2216C13.3858 13.3638 13.3626 13.493 13.316 13.6097Z"
+              fill="#7C7587"
+            />
+            <path
+              d="M20.6839 6.12459C18.7833 2.38175 15.0481 0 10.9754 0C6.66504 0 2.73034 2.66581 0.950815 6.79173C0.766224 7.21934 0.94691 7.72318 1.35433 7.91745C1.76109 8.11036 2.24105 7.92185 2.42592 7.49355C3.94347 3.97488 7.29911 1.7013 10.9754 1.7013C14.414 1.7013 17.5714 3.69112 19.2075 6.82776L17.7641 7.51461L21.7007 10.4784L22.1761 5.41493L20.6839 6.12459ZM20.4601 15.5696C20.0602 15.359 19.5738 15.5308 19.3739 15.9506C17.7738 19.3179 14.5555 21.4101 10.9751 21.4101C7.63167 21.4101 4.60535 19.5849 2.91621 16.6014L4.33432 15.8581L0.295031 13.0507L0 18.1296L1.46473 17.362C3.43275 20.9256 7.01379 23.1111 10.9751 23.1111C15.173 23.1111 18.9465 20.6583 20.8225 16.7103C21.0227 16.2897 20.8601 15.7792 20.4601 15.5696Z"
+              fill="#7C7587"
+            />
+          </svg>
+          Trade
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-btn" routerLink="/open-orders" routerLinkActive="active">
+          <svg
+            class="orders-icon"
+            width="31"
+            height="24"
+            viewBox="0 0 31 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.6333 12.2277V23.2944M15.6333 12.2277L27.5 6.09442M15.6333 12.2277L3.5 6.09442M15.6333 23.2944L27.5 17.5611V6.09442M15.6333 23.2944L3.5 17.5611V6.09442M27.5 6.09442L15.6333 0.93335L3.5 6.09442"
+              stroke="#7C7587"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle
+              cx="15.5001"
+              cy="6.4"
+              r="5.9"
+              stroke="#7C7587"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M27.5 6L30.5 8.5L17.5 15L15.5 12.5L13.5 15L1 8.5L3 6L15.5 12.5L27.5 6Z"
+            />
+            <path
+              d="M15.5 12.5L17.5 15L30.5 8.5L27.5 6L15.5 12.5ZM15.5 12.5L13.5 15L1 8.5L3 6L15.5 12.5Z"
+              stroke="#7C7587"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Open orders
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-btn" routerLink="/account/account" routerLinkActive="active">
+          <svg
+            class="account-icon"
+            width="22"
+            height="24"
+            viewBox="0 0 22 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.2177 6.47888C17.2177 9.66583 14.4036 12.3328 10.8252 12.3328C7.24672 12.3328 4.43262 9.66583 4.43262 6.47888C4.43262 3.29193 7.24672 0.625 10.8252 0.625C14.4036 0.625 17.2177 3.29193 17.2177 6.47888Z"
+              stroke="#7C7587"
+              stroke-width="1.25"
+            />
+            <path
+              d="M1 22.9999C2.40351 10.69 18.193 8.42182 21 22.6757"
+              stroke="#7C7587"
+              stroke-width="1.25"
+              stroke-linecap="round"
+            />
+          </svg>
+          Account
+        </a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-utility">
+      <li class="nav-item ms-3 d-none d-xl-block">
+        <div class="form-input-search">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0.624941 7.0834C0.624941 10.6594 3.47719 13.5418 6.9755 13.5418C10.4738 13.5418 13.326 10.6594 13.326 7.0834C13.326 3.50745 10.4738 0.625 6.9755 0.625C3.47719 0.625 0.624941 3.50745 0.624941 7.0834Z"
+              stroke="#7C7587"
+              stroke-width="1.25"
+            />
+            <path
+              d="M10.9502 12.1189C10.704 11.8769 10.6976 11.4782 10.9358 11.2283C11.174 10.9785 11.5666 10.9722 11.8127 11.2141L10.9502 12.1189ZM15.2034 14.5475C15.4496 14.7895 15.4561 15.1882 15.2179 15.438C14.9797 15.6879 14.5871 15.6942 14.3409 15.4522L15.2034 14.5475ZM11.8127 11.2141L15.2034 14.5475L14.3409 15.4522L10.9502 12.1189L11.8127 11.2141Z"
+              fill="#7C7587"
+            />
+          </svg>
+          <input
+            class="form-control form-control-lg"
+            type="text"
+            name="name"
+            placeholder="Search"
+          />
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-icon" routerLink="/messages" id="current-lang">
+          <i class="align-middle" data-feather="message-circle"></i>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-icon dropdown-toggle"
+          routerLink="#"
+          id="alertsDropdown"
+          data-bs-toggle="dropdown"
+        >
+          <div class="position-relative">
+            <i class="align-middle" data-feather="bell"></i>
+            <span class="indicator">2</span>
+          </div>
+        </a>
+        <div
+          class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+          aria-labelledby="alertsDropdown"
+        >
+          <div class="dropdown-menu-header">2 New Notifications</div>
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <div class="row g-0 align-items-center">
+                <div class="col-2">
+                  <i class="text-danger" data-feather="alert-octagon"></i>
+                </div>
+                <div class="col-10">
+                  <div class="list-group-item-title">Update completed</div>
+                  <div class="small mt-1">
+                    Restart server 12 to complete the update.
+                  </div>
+                  <div class="small mt-1">30m ago</div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="list-group-item">
+              <div class="row g-0 align-items-center">
+                <div class="col-2">
+                  <i class="text-warning" data-feather="bell"></i>
+                </div>
+                <div class="col-10">
+                  <div class="list-group-item-title">Lorem ipsum</div>
+                  <div class="small mt-1">
+                    Aliquam ex eros, imperdiet vulputate hendrerit et.
+                  </div>
+                  <div class="small mt-1">2h ago</div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="dropdown-menu-footer">
+            <a href="#">Show all notifications</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-icon" routerLink="/auth/login" id="logOut">
+          <i class="align-middle" data-feather="log-out"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
