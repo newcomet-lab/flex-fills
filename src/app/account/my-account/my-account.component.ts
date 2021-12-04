@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Validation from '../../utils/validation';
+import * as Feather from 'feather-icons';
 
 @Component({
   selector: 'app-my-account',
@@ -44,6 +45,10 @@ export class MyAccountComponent implements OnInit {
     {
       validators: [Validation.match('newPassword', 'confirmPassword')]
     });
+  }
+
+  ngAfterViewInit() {
+    Feather.replace();
   }
 
   save(){
