@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { 
+  FormBuilder, 
+  FormGroup, 
+  Validators 
+} from '@angular/forms';
 import Validation from '../../utils/validation';
 import * as Feather from 'feather-icons';
 
@@ -11,7 +15,7 @@ import * as Feather from 'feather-icons';
 })
 export class MyAccountComponent implements OnInit {
 
-  testModal: bootstrap.Modal | undefined
+  modalController: bootstrap.Modal | undefined
   pwChangeForm!: FormGroup;
   pwChangeSubmitted = false;
 
@@ -51,13 +55,13 @@ export class MyAccountComponent implements OnInit {
     Feather.replace();
   }
 
-  save(){
-    this.testModal?.toggle()
+  closeModal(){
+    this.modalController?.toggle()
   }
 
   openModal(element: any){
-    this.testModal = new bootstrap.Modal(element,{} )
-    this.testModal?.show()
+    this.modalController = new bootstrap.Modal(element,{} )
+    this.modalController?.show()
   }
 
   get getform() {

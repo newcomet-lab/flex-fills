@@ -1,0 +1,10 @@
+<label 
+  class="form-check mb-3"
+  *ngFor="let withdrawalSetting of withdrawalSettingList; let i = index">
+  <input 
+    class="form-check-input" 
+    type="checkbox" 
+    [checked]="withdrawalSetting.checked"
+    (change)="onWithdrawalSettingChange(i)" />
+  <span class="form-check-label">{{ withdrawalSetting.label }}</span>
+</label>

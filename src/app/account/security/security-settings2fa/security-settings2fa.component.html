@@ -1,0 +1,99 @@
+<div class="row mb-4">
+  <div class="col">
+    <div class="mb-3">
+      Please consider our available options for increasing the security of your account. We want to give
+      you every opportunity to be confident that your account is secure.
+    </div>
+  </div>
+</div>
+<div class="row mb-4">
+  <div class="col">
+    <h4 class="fs-16 mb-3">Protected actions:</h4>
+    <ul class="list-unstyled list-bullet">
+      <li>Logins</li>
+      <li>Withdrawal Confirmations</li>
+      <li>Password Changes</li>
+      <li>Security Settings Changes</li>
+      <li>Account Settings Changes</li>
+    </ul>
+  </div>
+</div>
+<div class="row mb-0">
+  <div class="col">
+    <button 
+      class="btn btn-lg flex-fills-btn"
+      (click)="openModal(setup2FA)">
+      Setup
+    </button>
+    <div 
+      class="modal"
+      tabindex="-1"
+      #setup2FA 
+      id="setup2FA">
+      <div 
+        class="modal-dialog modal-dialog-centered modal-md" 
+        role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button 
+              type="button" 
+              data-bs-dismiss="modal" 
+              aria-label="Close">
+              <i data-feather="x"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body-title text-center">
+              Two-Factor Authentication
+            </div>
+            <div class="row mb-4">
+              <div class="col-12">
+                Please enter your Authenticator 2FA token
+              </div>
+            </div>
+            <form [formGroup]="auth2FAForm" (ngSubmit)="on2FATokenSubmit()">
+              <div class="row mb-5">
+                <div class="col-12 form-group">
+                  <input
+                    type="text"
+                    formControlName="token"
+                    placeholder="Token"
+                    class="form-control form-control-lg"
+                    [ngClass]="{
+                      'is-invalid': auth2FAFormSubmitted && getform['token'].errors
+                    }"
+                  />
+                  <div
+                    *ngIf="
+                      auth2FAFormSubmitted &&
+                      (getform['token'].errors ||
+                        getform['token'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        getform['token'].errors
+                          ? getform['token'].errors['required']
+                          : false
+                      "
+                    >
+                      Token is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-0">
+                <div class="col-12 text-end">
+                  <button class="btn btn-lg flex-fills-btn" type="submit">
+                    Authenticate
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

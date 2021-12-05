@@ -1,0 +1,10 @@
+<label 
+  class="form-check mb-3"
+  *ngFor="let session of sessionList; let i = index">
+  <input 
+    class="form-check-input" 
+    type="checkbox" 
+    [checked]="session.checked"
+    (change)="onSessionChange(i)" />
+  <span class="form-check-label">{{ session.label }}</span>
+</label>

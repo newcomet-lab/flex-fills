@@ -1,0 +1,66 @@
+<form 
+  class="row mb-3 mb-md-0" 
+  [formGroup]="walletForm" 
+  (ngSubmit)="onWalletFormSubmit()">
+  <div class="col-12 col-md-7 mb-2 form-group">
+    <input
+      type="address"
+      formControlName="address"
+      placeholder="Address"
+      class="form-control form-control-lg"
+      [ngClass]="{
+        'is-invalid': walletFormSubmitted && getform['address'].errors
+      }"
+    />
+    <div
+      *ngIf="
+      walletFormSubmitted &&
+        (getform['address'].errors ||
+          getform['address'].touched)
+      "
+      class="text-danger"
+    >
+      <div
+        *ngIf="
+          getform['address'].errors
+            ? getform['address'].errors['required']
+            : false
+        "
+      >
+        Address is required
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-2 mb-2">
+    <div class="form-control-container form-group">
+      <select 
+        class="form-control form-control-lg form-select-light"
+        formControlName="type"
+        [ngClass]="{
+          'is-invalid': walletFormSubmitted && getform['type'].errors
+        }">
+        <option *ngFor="let c of coinList" [ngValue]="c">{{ c }}</option>
+      </select>
+      <svg width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L8.5 7L16 1" stroke="#7C7587" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+  </div>
+  <div class="col-12 col-md-2 mb-2">
+    <button 
+      class="h-100 btn btn-lg form-control-btn saved"
+      [ngClass]="{
+        'saved' : withdrawalInfo.saved
+      }"
+      type="submit">
+      {{ withdrawalInfo.saved ? 'Saved' : 'Save' }}
+    </button>
+  </div>
+  <div class="col-12 col-md-1 d-flex justify-content-center align-items-center mb-2">
+    <span 
+      type="button" 
+      (click)="onRemoveWithdrawalInfo()">
+      <i data-feather="x"></i>
+    </span>
+  </div>
+</form>

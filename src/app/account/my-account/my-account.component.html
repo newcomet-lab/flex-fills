@@ -17,7 +17,8 @@
         <div
           class="modal"
           tabindex="-1"
-          #changeUsername id="changeUsername"
+          #changeUsername 
+          id="changeUsername"
         >
           <div
             class="modal-dialog modal-dialog-centered modal-sm"
@@ -58,7 +59,8 @@
         <div
           class="modal"
           tabindex="-1"
-          #changePassword id="changePassword"
+          #changePassword 
+          id="changePassword"
         >
           <div
             class="modal-dialog modal-dialog-centered modal-md"
@@ -225,6 +227,47 @@
           <div class="form-field-value">Inna.Bisler@mail.ru</div>
         </div>
         <a href="#" class="change-link">Change</a>
+      </div>
+    </div>
+    <div class="col-12 col-lg-10">
+      <a
+        class="change-link"
+        (click)="openModal(deactivateAccount)">
+        Deactivate Account
+      </a>
+      <div
+        class="modal"
+        tabindex="-1"
+        #deactivateAccount 
+        id="deactivateAccount"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered modal-sm"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <button
+                type="button"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <i data-feather="x"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-body-title text-center">Deactivate Account</div>
+              <p class="text-center mb-3">
+                Attention! You will lose access to any of your data. repost. and account history
+              </p>
+              <div class="col-12 text-end">
+                <button class="btn btn-lg flex-fills-btn" type="button">
+                  Deactivate Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
