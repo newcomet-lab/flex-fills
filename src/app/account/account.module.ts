@@ -13,6 +13,7 @@ import { SecuritySettingsWhitelistComponent } from './security/security-settings
 import { WalletAddressFormComponent } from './security/wallet-address-form/wallet-address-form.component';
 import { SecuritySettingsSessionComponent } from './security/security-settings-session/security-settings-session.component';
 import { SecuritySettingsWithdrawalComponent } from './security/security-settings-withdrawal/security-settings-withdrawal.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SecuritySettingsWithdrawalComponent } from './security/security-setting
     SecuritySettingsWhitelistComponent,
     WalletAddressFormComponent,
     SecuritySettingsSessionComponent,
-    SecuritySettingsWithdrawalComponent
+    SecuritySettingsWithdrawalComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
