@@ -1,0 +1,35 @@
+<div class="container-fluid p-0">
+  <div class="mb-4">
+    <h3>Address book</h3>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12 mb-3">
+      <div>
+        The address book allows for labeling and saving destination assresses for easy use later.
+        When withdrawing you can quickly select an address from your address book
+      </div>
+    </div>
+    <div *ngFor="let item of withdrawAddressList; let i = index">
+      <app-wallet-address-form 
+        [withdrawalInfo]="withdrawAddressList[i]"
+        [withdrawalInfoIndex]="i"
+        (saveWithdrawalInfo) = "saveWithdrawalInfo($event)"
+        (removeWithdrawalInfo) = "removeWithdrawalInfo($event)">
+      </app-wallet-address-form>
+    </div>
+    <div class="row mt-4 mb-0">
+      <div class="col-12">
+        <button 
+          class="btn btn-lg btn-with-icon" 
+          (click)="addNewAddress()">
+          <svg class="me-2" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12.5" cy="12.5" r="11.5" stroke="#D8D7DB" stroke-width="2" />
+            <path d="M12.5 5V19" stroke="#D8D7DB" stroke-width="2" stroke-linecap="round" />
+            <path d="M5.5 12H19.5" stroke="#D8D7DB" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          New address
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

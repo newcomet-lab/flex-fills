@@ -1,0 +1,22 @@
+<div class="container-fluid p-0">
+  <div class="mb-4">
+    <h3>Theme</h3>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <div 
+        class="mb-3"
+        *ngFor="let item of themeList; let i = index">
+        <label class="form-check form-check-inline">
+          <input 
+            class="form-check-input" 
+            type="radio" 
+            [value]="item" 
+            name="theme" 
+            [(ngModel)]="themeValue"/>
+          <span class="form-check-label">{{ item }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

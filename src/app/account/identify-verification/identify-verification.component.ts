@@ -21,7 +21,7 @@ export class IdentifyVerificationComponent implements OnInit {
       status: false
     }
   }; // comes from backend service
-  isEdit = true; // switch between show/edit page, this is false as default
+  isEdit = false; // switch between show/edit page, this is false as default
 
   constructor() { }
 
