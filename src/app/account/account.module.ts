@@ -14,6 +14,9 @@ import { WalletAddressFormComponent } from './security/wallet-address-form/walle
 import { SecuritySettingsSessionComponent } from './security/security-settings-session/security-settings-session.component';
 import { SecuritySettingsWithdrawalComponent } from './security/security-settings-withdrawal/security-settings-withdrawal.component';
 import { NotificationComponent } from './notification/notification.component';
+import { IdentifyVerificationComponent } from './identify-verification/identify-verification.component';
+import { IdentifyVerificationDetailComponent } from './identify-verification/identify-verification-detail/identify-verification-detail.component';
+import { IdentifyVerificationEditComponent } from './identify-verification/identify-verification-edit/identify-verification-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { NotificationComponent } from './notification/notification.component';
     WalletAddressFormComponent,
     SecuritySettingsSessionComponent,
     SecuritySettingsWithdrawalComponent,
-    NotificationComponent
+    NotificationComponent,
+    IdentifyVerificationComponent,
+    IdentifyVerificationDetailComponent,
+    IdentifyVerificationEditComponent
   ],
   imports: [
     CommonModule,

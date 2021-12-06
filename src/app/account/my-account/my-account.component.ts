@@ -15,7 +15,7 @@ import * as Feather from 'feather-icons';
 })
 export class MyAccountComponent implements OnInit {
 
-  modalController: bootstrap.Modal | undefined
+  modalController: bootstrap.Modal | undefined;
   pwChangeForm!: FormGroup;
   pwChangeSubmitted = false;
 

@@ -1,0 +1,15 @@
+<div class="container-fluid p-0">
+  <div class="mb-4">
+    <h3>Identify Verification</h3>
+  </div>
+  <app-identify-verification-detail
+    *ngIf="isEdit === false" 
+    [idInfo]="idInfo"
+    (editID)="editID($event)">
+  </app-identify-verification-detail>
+  <app-identify-verification-edit
+    *ngIf="isEdit === true"
+    [idInfo]="idInfo"
+    (showDetail)="showDetail($event)">
+  </app-identify-verification-edit>
+</div>
