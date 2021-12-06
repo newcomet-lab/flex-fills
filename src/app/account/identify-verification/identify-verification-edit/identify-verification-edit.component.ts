@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import * as Feather from 'feather-icons';
 import * as bootstrap from 'bootstrap';
+import flatpickr from "flatpickr";
 
 @Component({
   selector: 'app-identify-verification-edit',
@@ -38,10 +39,14 @@ export class IdentifyVerificationEditComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit() {
     Feather.replace();
+    flatpickr('.form-flatpickr', {
+      defaultDate: new Date(this.idInfo.dateOfBirth)
+    });
   }
 
   reset() {
@@ -54,11 +59,11 @@ export class IdentifyVerificationEditComponent implements OnInit {
     // 
   }
 
-  closeModal(){
+  closeModal() {
     this.modalController?.toggle();
   }
 
-  openModal(element: any){
+  openModal(element: any) {
     this.modalController = new bootstrap.Modal(element,{} );
     this.modalController?.show();
 
@@ -70,6 +75,24 @@ export class IdentifyVerificationEditComponent implements OnInit {
         type: 'save'
       });
     }, 1000);
+  }
+
+  onIdSelect(event: any) {
+    let formData = new FormData();
+
+    if (event.target.files.length > 0) {
+      const files = event.target.files[0];
+      formData.append('idDoc', files);
+    }
+  }
+
+  onBillDocSelect(event: any) {
+    let formData = new FormData();
+
+    if (event.target.files.length > 0) {
+      const files = event.target.files[0];
+      formData.append('billDoc', files);
+    }
   }
 
 }

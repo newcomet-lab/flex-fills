@@ -9,7 +9,7 @@ export class IdentifyVerificationComponent implements OnInit {
 
   idInfo = {
     address: 'Inna Bisler',
-    dateOfBirth: '1991.10.10',
+    dateOfBirth: '1991-10-10',
     nationality: 'American',
     countryOfResidence: 'USA',
     passport: {
@@ -21,7 +21,7 @@ export class IdentifyVerificationComponent implements OnInit {
       status: false
     }
   }; // comes from backend service
-  isEdit = false; // switch between show/edit page, this is false as default
+  isEdit = true; // switch between show/edit page, this is false as default
 
   constructor() { }
 
