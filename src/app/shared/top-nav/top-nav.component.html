@@ -15,16 +15,13 @@
     aria-controls="navbarCollapse"
     aria-expanded="false"
     aria-label="Toggle navigation"
-    (click)="toggleCollapsed()" >
+  >
     <span class="navbar-toggler-icon">
       <i class="align-middle" data-feather="layers"></i>
     </span>
   </button>
 
-  <div 
-    class="navbar-collapse collapse" 
-    id="navbarCollapse"
-    [ngClass]="{'show': !collapsed, 'nv-hide': collapsed}">
+  <div class="navbar-collapse collapse" id="navbarCollapse">
     <ul class="navbar-nav navbar-menu-links-container">
       <li class="nav-item">
         <a 
