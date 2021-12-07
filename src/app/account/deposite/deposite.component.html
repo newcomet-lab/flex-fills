@@ -1,0 +1,152 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="mb-4">
+        <h3>Deposite</h3>
+      </div>
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="form-input-search form-input-search-lg">
+            <svg
+              width="16" 
+              height="16" 
+              viewBox="0 0 16 16" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0.624941 7.0834C0.624941 10.6594 3.47719 13.5418 6.9755 13.5418C10.4738 13.5418 13.326 10.6594 13.326 7.0834C13.326 3.50745 10.4738 0.625 6.9755 0.625C3.47719 0.625 0.624941 3.50745 0.624941 7.0834Z"
+                stroke="#7C7587" stroke-width="1.25" />
+              <path
+                d="M10.9502 12.1189C10.704 11.8769 10.6976 11.4782 10.9358 11.2283C11.174 10.9785 11.5666 10.9722 11.8127 11.2141L10.9502 12.1189ZM15.2034 14.5475C15.4496 14.7895 15.4561 15.1882 15.2179 15.438C14.9797 15.6879 14.5871 15.6942 14.3409 15.4522L15.2034 14.5475ZM11.8127 11.2141L15.2034 14.5475L14.3409 15.4522L10.9502 12.1189L11.8127 11.2141Z"
+                fill="#7C7587" />
+            </svg>
+            <input 
+              class="form-control form-control-lg" 
+              type="text" 
+              name="name" 
+              placeholder="Coin type"
+              [(ngModel)]="coinType" />
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <div class="radio-wrapper radio-wrapper-grid mb-3">
+            <div 
+              class="radio-btn"
+              *ngFor="let ctItem of coinTypesList; let ctIdx = index">
+              <input 
+                type="radio"
+                [value]="ctItem"
+                [(ngModel)]="coinTypes"/>
+              <div>{{ ctItem }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ul class="coins-list">
+            <li *ngFor="let clItem of coinList; let clIdx = index;">
+              <a [routerLink]="'/account/deposite-edit/' + clItem.id">
+                <img [src]="clItem.logo" alt="currency logo" />
+                <span>{{ clItem.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5 offset-lg-1">
+      <div class="row">
+        <div class="col-12">
+          <div class="accordion" id="deposite">
+            <div class="accordion-item">
+              <h2 
+                class="accordion-header" 
+                id="headingDepositHistory">
+                <button 
+                  class="accordion-button" 
+                  type="button" 
+                  data-bs-toggle="collapse"
+                  data-bs-target="#depositHistory" 
+                  aria-expanded="true" 
+                  aria-controls="depositHistory">
+                  <span class="accordion-header-first">
+                    History <br />
+                    <span class="accordion-header-second">
+                      Deposit history
+                    </span>
+                  </span>
+                </button>
+              </h2>
+              <div 
+                id="depositHistory" 
+                class="accordion-collapse collapse show" 
+                aria-labelledby="headingDepositHistory">
+                <div class="accordion-body">
+                  <div 
+                    class="row mb-2"
+                    *ngIf="recentDepositeHistory.length > 0">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Coin</th>
+                              <th>Value</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let dhItem of recentDepositeHistory; let dhIdx = index">
+                              <td>{{ dhItem.coin }}</td>
+                              <td>{{ dhItem.value }}</td>
+                              <td>{{ dhItem.date }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div 
+                    class="row mb-2"
+                    *ngIf="recentDepositeHistory.length === 0">
+                    <div class="col-12">
+                      <div class="empty-results">
+                        <div class="info-icon-sign">i</div>
+                        <div>No recent deposits</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <button class="btn btn-lg btn-with-icon btn-dark-bg">
+                        <svg 
+                          class="me-2" 
+                          width="18" 
+                          height="16" 
+                          viewBox="0 0 18 16" 
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M8.99944 4.38281L8.9978 8.21525C8.9978 8.36077 9.05711 8.49985 9.16261 8.60256L11.9778 11.3437L12.7733 10.569L10.1228 7.98841L10.1244 4.38281H8.99944Z"
+                            fill="#7C7587" />
+                          <path
+                            d="M10.125 0C6.16562 0 2.88873 2.86362 2.33991 6.57354H0L2.8125 9.3125L5.625 6.57354H3.47661C4.01475 3.46959 6.78688 1.0956 10.125 1.0956C13.8472 1.0956 16.875 4.04427 16.875 7.66914C16.875 11.294 13.8472 14.2427 10.125 14.2427C8.03267 14.2427 6.09249 13.3204 4.80212 11.7123L3.91553 12.3864C5.42064 14.2619 7.68383 15.3382 10.125 15.3382C14.4673 15.3382 18 11.8974 18 7.66914C18 3.44087 14.4673 3.18063e-05 10.125 0Z"
+                            fill="#7C7587" />
+                        </svg>
+                        Full History
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

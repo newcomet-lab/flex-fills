@@ -10,7 +10,7 @@ import * as Feather from 'feather-icons';
 })
 export class SecuritySettings2faComponent implements OnInit {
 
-  modalController: bootstrap.Modal | undefined
+  modalController: bootstrap.Modal | undefined;
   auth2FAForm!: FormGroup;
   auth2FAFormSubmitted = false;
 

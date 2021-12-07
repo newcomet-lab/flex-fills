@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Feather from 'feather-icons';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-top-nav',
@@ -7,7 +8,7 @@ import * as Feather from 'feather-icons';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
@@ -15,6 +16,10 @@ export class TopNavComponent implements OnInit {
 
   ngAfterViewInit() {
     Feather.replace();
+  }
+
+  redirect(url: any) {
+    this.router.navigate([url]);
   }
 
 }

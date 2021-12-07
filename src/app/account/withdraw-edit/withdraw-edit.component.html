@@ -1,0 +1,171 @@
+<div class="container-fluid p-0">
+  <div class="mb-4">
+    <h3>New Withdraw</h3>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-lg-6">
+      <h4 class="fs-16">
+        {{ withdrawInfo.label }}
+      </h4>
+      <div class="mb-3">
+        <input 
+          class="form-control form-control-lg" 
+          type="text" 
+          value="0.47" />
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="accordion" id="withdraw">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingWithDrawEdit">
+            <button 
+              class="accordion-button" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#withDrawEdit"
+              aria-expanded="true"
+               aria-controls="withDrawEdit">
+              <span class="accordion-header-first">
+                Withdrawal Address Whitelist <br />
+                <span class="accordion-header-second">
+                  Choose withdraw address
+                </span>
+              </span>
+            </button>
+          </h2>
+          <div 
+            id="withDrawEdit" 
+            class="accordion-collapse collapse show" 
+            aria-labelledby="headingWithDrawEdit">
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col-12">
+                  <div 
+                    class="row mb-3 mb-md-0"
+                    *ngFor="let address of withdrawInfo.addressList; let cIdx = index;">
+                    <div class="col-12 col-md-8 mb-2">
+                      <input 
+                        class="form-control form-control-lg" 
+                        type="text" 
+                        [value]="address" 
+                        placeholder="Address" />
+                    </div>
+                    <div class="col-12 col-md-2 mb-2">
+                      <div class="form-control-container">
+                        <select 
+                          class="form-control form-control-lg form-select" 
+                          disabled>
+                          <option>{{ withdrawInfo.arial }}</option>
+                        </select>
+                        <svg 
+                          width="17" 
+                          height="8" 
+                          viewBox="0 0 17 8" 
+                          fill="none" 
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 1L8.5 7L16 1" stroke="#7C7587" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-2 mb-2">
+                      <button 
+                        class="btn btn-lg form-control-btn nv-select-btn"
+                        [ngClass]="{
+                          'saved': isSelected(address)
+                        }"
+                        (click)="onSelect(address)">
+                        {{ isSelected(address) ? 'Selected' : 'Select' }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4 mt-5">
+                <div class="col">
+                  <button 
+                    class="btn btn-lg flex-fills-btn" 
+                    role="button" 
+                    (click)="openModal(setup2FA)">
+                    Withdraw {{ withdrawInfo.total }} {{ withdrawInfo.arial }}
+                  </button>
+                  <div 
+                    class="modal"
+                    tabindex="-1"
+                    #setup2FA 
+                    id="setup2FA">
+                    <div 
+                      class="modal-dialog modal-dialog-centered modal-md" 
+                      role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button 
+                            type="button" 
+                            data-bs-dismiss="modal" 
+                            aria-label="Close">
+                            <i data-feather="x"></i>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="modal-body-title text-center">
+                            Withdraw {{ withdrawInfo.total }} {{ withdrawInfo.arial }}
+                          </div>
+                          <div class="row mb-4">
+                            <div class="col-12">
+                              Please enter your Authenticator 2FA token
+                            </div>
+                          </div>
+                          <form [formGroup]="auth2FAForm" (ngSubmit)="on2FATokenSubmit()">
+                            <div class="row mb-5">
+                              <div class="col-12 form-group">
+                                <input
+                                  type="text"
+                                  formControlName="token"
+                                  placeholder="Token"
+                                  class="form-control form-control-lg"
+                                  [ngClass]="{
+                                    'is-invalid': auth2FAFormSubmitted && getform['token'].errors
+                                  }"
+                                />
+                                <div
+                                  *ngIf="
+                                    auth2FAFormSubmitted &&
+                                    (getform['token'].errors ||
+                                      getform['token'].touched)
+                                  "
+                                  class="text-danger"
+                                >
+                                  <div
+                                    *ngIf="
+                                      getform['token'].errors
+                                        ? getform['token'].errors['required']
+                                        : false
+                                    "
+                                  >
+                                    Token is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row mb-0">
+                              <div class="col-12 text-end">
+                                <button class="btn btn-lg flex-fills-btn" type="submit">
+                                  Authenticate
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

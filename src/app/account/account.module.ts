@@ -23,6 +23,11 @@ import { ChartSettingComponent } from './chart-setting/chart-setting.component';
 import { AddressBookComponent } from './address-book/address-book.component';
 import { HistoryComponent } from './history/history.component';
 import { SupportComponent } from './support/support.component';
+import { AssetsComponent } from './assets/assets.component';
+import { DepositeComponent } from './deposite/deposite.component';
+import { DepositeEditComponent } from './deposite-edit/deposite-edit.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
+import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,12 @@ import { SupportComponent } from './support/support.component';
     ChartSettingComponent,
     AddressBookComponent,
     HistoryComponent,
-    SupportComponent
+    SupportComponent,
+    AssetsComponent,
+    DepositeComponent,
+    DepositeEditComponent,
+    WithdrawComponent,
+    WithdrawEditComponent
   ],
   imports: [
     CommonModule,

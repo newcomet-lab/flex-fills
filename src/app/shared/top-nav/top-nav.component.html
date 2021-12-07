@@ -3,7 +3,7 @@
     <i class="hamburger align-self-center"></i>
   </a>
 
-  <a class="sidebar-brand" routerLink="index.html">
+  <a class="sidebar-brand" routerLink="/">
     <img src="/assets/img/logo.png" alt="logo flex fills" />
   </a>
 
@@ -24,7 +24,10 @@
   <div class="navbar-collapse collapse" id="navbarCollapse">
     <ul class="navbar-nav navbar-menu-links-container">
       <li class="nav-item">
-        <a class="nav-btn" routerLink="/markets" routerLinkActive="active">
+        <a 
+          class="nav-btn" 
+          routerLink="/markets" 
+          routerLinkActive="active">
           <svg
             class="markets-icon"
             width="28"
@@ -74,7 +77,10 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-btn" routerLink="/trade" routerLinkActive="active">
+        <a 
+          class="nav-btn" 
+          routerLink="/trade" 
+          routerLinkActive="active">
           <svg
             class="trade-icon"
             width="23"
@@ -96,7 +102,10 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-btn" routerLink="/open-orders" routerLinkActive="active">
+        <a 
+          class="nav-btn" 
+          routerLink="/open-orders" 
+          routerLinkActive="active">
           <svg
             class="orders-icon"
             width="31"
@@ -133,7 +142,11 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-btn" routerLink="/account/account" routerLinkActive="active">
+        <a 
+          class="nav-btn" 
+          routerLink="/account" 
+          routerLinkActive="active"
+          (click)="redirect('/account/account')">
           <svg
             class="account-icon"
             width="22"
@@ -195,7 +208,7 @@
       <li class="nav-item dropdown">
         <a
           class="nav-icon dropdown-toggle"
-          routerLink="#"
+          href="#"
           id="alertsDropdown"
           data-bs-toggle="dropdown"
         >

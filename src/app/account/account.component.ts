@@ -8,9 +8,11 @@ import {Router} from '@angular/router';
 })
 export class AccountComponent implements OnInit {
 
-  constructor(private route:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.route.navigate(['/account/account']);
+    if (this.router.url === '/account') {
+      this.router.navigate(['/account/account']);
+    } 
   }
 }

@@ -10,6 +10,11 @@ import { NotificationComponent } from './notification/notification.component';
 import { SecurityComponent } from './security/security.component';
 import { SupportComponent } from './support/support.component';
 import { ThemeComponent } from './theme/theme.component';
+import { AssetsComponent } from './assets/assets.component';
+import { DepositeComponent } from './deposite/deposite.component';
+import { DepositeEditComponent } from './deposite-edit/deposite-edit.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
+import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
 
 const routes: Routes = [
   {
@@ -43,7 +48,22 @@ const routes: Routes = [
       }, {
         path: 'support',
         component: SupportComponent
-      }
+      }, {
+        path: 'assets',
+        component: AssetsComponent
+      }, {
+        path: 'deposite',
+        component: DepositeComponent
+      }, {
+        path: 'deposite-edit/:id',
+        component: DepositeEditComponent
+      }, {
+        path: 'withdraw',
+        component: WithdrawComponent
+      }, {
+        path: 'withdraw-edit/:id',
+        component: WithdrawEditComponent
+      } 
     ]
   }
 ];
