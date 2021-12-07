@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class TopNavComponent implements OnInit {
 
-  isHidden = true;
+  isHidden: any = true
 
   constructor(private router: Router) {
   }
