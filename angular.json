@@ -20,6 +20,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "simplebar"
+            ],
             "outputPath": "dist/flex-fill-app",
             "index": "src/index.html",
             "main": "src/main.ts",
