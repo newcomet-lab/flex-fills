@@ -1,0 +1,110 @@
+<div class="mb-4">
+  <h3>Support</h3>
+</div>
+<div class="row mb-3">
+  <div class="col-12">
+    <h4 class="fs-16">
+      Contact FlexFills Support
+    </h4>
+    <div>
+      Specific details will expedite the resolution of your request
+    </div>
+  </div>
+</div>
+<form 
+  class="row mb-3 mb-md-0" 
+  [formGroup]="supportForm" 
+  (ngSubmit)="onSupportFormSubmit()">
+  <div class="row mb-2">
+    <div class="col-12 col-lg-4 form-group">
+      <input 
+        class="form-control form-control-lg" 
+        type="text" 
+        formControlName="subject"
+        placeholder="Subject"
+        [ngClass]="{
+          'is-invalid': supportFormSubmitted && getform['subject'].errors
+        }" />
+    </div>
+    <div
+      *ngIf="
+      supportFormSubmitted &&
+        (getform['subject'].errors ||
+          getform['subject'].touched)
+      "
+      class="text-danger"
+    >
+      <div
+        *ngIf="
+          getform['subject'].errors
+            ? getform['subject'].errors['required']
+            : false
+        "
+      >
+        Subject is required
+      </div>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-lg-4 form-group">
+      <textarea 
+        class="form-control form-control-lg" 
+        type="text" 
+        formControlName="content"
+        placeholder="Describe your issue"
+        [ngClass]="{
+          'is-invalid': supportFormSubmitted && getform['content'].errors
+        }"
+        rows="6">
+      </textarea>
+    </div>
+    <div
+      *ngIf="
+      supportFormSubmitted &&
+        (getform['content'].errors ||
+          getform['content'].touched)
+      "
+      class="text-danger"
+    >
+      <div
+        *ngIf="
+          getform['content'].errors
+            ? getform['content'].errors['required']
+            : false
+        "
+      >
+        Content is required
+      </div>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-lg-4">
+      <div class="text-white">Attachments</div>
+      <div class="form-control form-control-lg form-control-dropzone">
+        <div class="form-field-label">
+          <input 
+            #fileInput 
+            class="nv-fileupload" 
+            type="file"
+            (change)="onAttachmentsChanged($event)" 
+            multiple />
+        </div>
+        <button class="add-btn" (click)="fileInput.click()">
+          <i data-feather="plus"></i>
+        </button>
+      </div>
+      <div class="mt-1"> 
+        png, jpg, webp (max 2MB)
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-12">
+      <button 
+        class="btn btn-lg flex-fills-btn"
+        type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>

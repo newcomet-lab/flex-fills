@@ -22,6 +22,7 @@ import { ThemeComponent } from './theme/theme.component';
 import { ChartSettingComponent } from './chart-setting/chart-setting.component';
 import { AddressBookComponent } from './address-book/address-book.component';
 import { HistoryComponent } from './history/history.component';
+import { SupportComponent } from './support/support.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { HistoryComponent } from './history/history.component';
     ThemeComponent,
     ChartSettingComponent,
     AddressBookComponent,
-    HistoryComponent
+    HistoryComponent,
+    SupportComponent
   ],
   imports: [
     CommonModule,

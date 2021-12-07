@@ -1,0 +1,8 @@
+input.nv-fileupload[type=file]::-webkit-file-upload-button {
+    display: none;
+}
+
+.nv-fileupload {
+    width: 100%;
+    cursor: pointer;
+}

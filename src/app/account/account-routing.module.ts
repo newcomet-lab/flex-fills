@@ -8,6 +8,7 @@ import { IdentifyVerificationComponent } from './identify-verification/identify-
 import { MyAccountComponent } from './my-account/my-account.component';
 import { NotificationComponent } from './notification/notification.component';
 import { SecurityComponent } from './security/security.component';
+import { SupportComponent } from './support/support.component';
 import { ThemeComponent } from './theme/theme.component';
 
 const routes: Routes = [
@@ -39,6 +40,9 @@ const routes: Routes = [
       }, {
         path: 'history',
         component: HistoryComponent
+      }, {
+        path: 'support',
+        component: SupportComponent
       }
     ]
   }
