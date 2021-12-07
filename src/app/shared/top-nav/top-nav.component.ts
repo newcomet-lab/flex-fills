@@ -9,6 +9,8 @@ import {Router} from '@angular/router';
 })
 export class TopNavComponent implements OnInit {
 
+  isHidden = true;
+
   constructor(private router: Router) {
   }
 
@@ -24,6 +26,7 @@ export class TopNavComponent implements OnInit {
   }
 
   toggleCollapsed() {
+    this.isHidden = false;
   }
 
 }
