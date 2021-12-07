@@ -26,7 +26,7 @@ export class TopNavComponent implements OnInit {
   }
 
   toggleCollapsed() {
-    this.isHidden = false;
+    this.isHidden = !this.isHidden;
   }
 
 }

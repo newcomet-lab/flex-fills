@@ -22,7 +22,10 @@
     </span>
   </button>
 
-  <div class="navbar-collapse collapse" id="navbarCollapse">
+  <div 
+    class="navbar-collapse collapse" 
+    id="navbarCollapse"
+    [ngClass]="{'show': !isHidden, 'nv-hide': isHidden}">
     <ul class="navbar-nav navbar-menu-links-container">
       <li class="nav-item">
         <a 
