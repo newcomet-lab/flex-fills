@@ -8,6 +8,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
+
+  collapsed = true;
+
   constructor(private router: Router) {
   }
 
@@ -20,6 +23,10 @@ export class TopNavComponent implements OnInit {
 
   redirect(url: any) {
     this.router.navigate([url]);
+  }
+
+  toggleCollapsed() {
+    this.collapsed = !this.collapsed;
   }
 
 }
