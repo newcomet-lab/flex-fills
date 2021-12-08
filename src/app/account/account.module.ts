@@ -5,8 +5,6 @@ import { AccountRoutingModule } from './account-routing.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { AccountComponent } from './account.component';
-import { TopNavComponent } from '../shared/top-nav/top-nav.component';
-import { SideNavComponent } from '../shared/side-nav/side-nav.component';
 import { SecurityComponent } from './security/security.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { SecuritySettings2faComponent } from './security/security-settings2fa/security-settings2fa.component';
@@ -28,12 +26,11 @@ import { DepositeComponent } from './deposite/deposite.component';
 import { DepositeEditComponent } from './deposite-edit/deposite-edit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     AccountComponent,
-    TopNavComponent,
-    SideNavComponent,
     SecurityComponent,
     MyAccountComponent,
     SecuritySettings2faComponent,
@@ -61,7 +58,8 @@ import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
     FormsModule,
     ReactiveFormsModule,
     AccountRoutingModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    SharedModule
   ]
 })
 export class AccountModule { }

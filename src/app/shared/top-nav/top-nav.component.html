@@ -31,7 +31,8 @@
         <a 
           class="nav-btn" 
           routerLink="/markets" 
-          routerLinkActive="active">
+          routerLinkActive="active"
+          (click)="redirect('/markets/index')">
           <svg
             class="markets-icon"
             width="28"
@@ -84,7 +85,8 @@
         <a 
           class="nav-btn" 
           routerLink="/trade" 
-          routerLinkActive="active">
+          routerLinkActive="active"
+          (click)="redirect('/trade/index')">
           <svg
             class="trade-icon"
             width="23"
@@ -109,7 +111,8 @@
         <a 
           class="nav-btn" 
           routerLink="/open-orders" 
-          routerLinkActive="active">
+          routerLinkActive="active"
+          (click)="redirect('/open-orders/index')">
           <svg
             class="orders-icon"
             width="31"

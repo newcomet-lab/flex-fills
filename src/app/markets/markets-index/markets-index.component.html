@@ -1,0 +1,38 @@
+<div class="container-fluid p-0">
+  <div class="mb-4 text-center">
+    <h3>Markets</h3>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Pair</th>
+              <th>Last Price</th>
+              <th>Change</th>
+              <th>24HR Volume</th>
+              <th>BID</th>
+              <th>ASK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mItem of marketList; let mIdx = index;">
+              <td>{{ mItem.pair }}</td>
+              <td>{{ mItem.lastPrice | numberWithSpace }}</td>
+              <td [ngClass]="{
+                'td-success': mItem.changeStatus > 0,
+                'td-danger': mItem.changeStatus <0 
+              }">
+                {{ mItem.changeStatus > 0 ? '+' : '-' }}{{ mItem.change }}%
+              </td>
+              <td>{{ mItem.volume | numberWithSpace }}</td>
+              <td>{{ mItem.bid | numberWithSpace }}</td>
+              <td>{{ mItem.ask | numberWithSpace }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

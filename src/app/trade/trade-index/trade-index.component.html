@@ -1,0 +1,336 @@
+<div class="container-fluid p-0">
+  <div class="row mb-5">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <div class="form-input-search form-input-search-lg mb-5">
+        <svg
+          width="16" 
+          height="16" 
+          viewBox="0 0 16 16" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0.624941 7.0834C0.624941 10.6594 3.47719 13.5418 6.9755 13.5418C10.4738 13.5418 13.326 10.6594 13.326 7.0834C13.326 3.50745 10.4738 0.625 6.9755 0.625C3.47719 0.625 0.624941 3.50745 0.624941 7.0834Z"
+            stroke="#7C7587" stroke-width="1.25" />
+          <path
+            d="M10.9502 12.1189C10.704 11.8769 10.6976 11.4782 10.9358 11.2283C11.174 10.9785 11.5666 10.9722 11.8127 11.2141L10.9502 12.1189ZM15.2034 14.5475C15.4496 14.7895 15.4561 15.1882 15.2179 15.438C14.9797 15.6879 14.5871 15.6942 14.3409 15.4522L15.2034 14.5475ZM11.8127 11.2141L15.2034 14.5475L14.3409 15.4522L10.9502 12.1189L11.8127 11.2141Z"
+            fill="#7C7587" />
+        </svg>
+        <input 
+          class="form-control form-control-lg" 
+          type="text" 
+          name="searchKey" 
+          placeholder="Search"
+          [(ngModel)]="searchKey" />
+      </div>
+      <h3 class="text-center mb-3">
+        Markets
+      </h3>
+      <div class="table-responsive">
+        <table class="table table-hover table-sm table-sm-sm fs-10 fw-light">
+          <thead>
+            <tr>
+              <th class="fw-light">Pair</th>
+              <th class="fw-light">Volume</th>
+              <th class="fw-light">Price</th>
+              <th class="fw-light">24H Cng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mItem of marketList; let mIdx = index;">
+              <td>{{ mItem.pair }}</td>
+              <td>{{ mItem.volume | numberWithSpace }}</td>
+              <td>{{ mItem.price | numberWithSpace }}</td>
+              <td [ngClass]="{
+                'td-success': mItem.changeStatus > 0,
+                'td-danger': mItem.changeStatus <0 
+              }">
+                {{ mItem.changeStatus > 0 ? '+' : '-' }}{{ mItem.change }}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-8 col-xl-9 col-xxl-10 vstack">
+      <div class="panel mb-5">
+        <div class="panel-left">
+          <img 
+            class="currency-logo" 
+            src="assets/img/currency/btc_icon.png" 
+            alt="currency logo">
+          <h3 class="currency-name">BTC/USDT</h3>
+          <div class="currency-info">i</div>
+        </div>
+        <div class="panel-center">
+          <div class="currency-value currency-value-lg">
+            48,549
+          </div>
+          <div class="currency-change change-positive">
+            1,799.00 (3.80%)
+          </div>
+        </div>
+        <div class="panel-right">
+          <div class="currency-labeled-value">
+            <div class="currency-value">
+              49 250.00
+            </div>
+            <div class="currency-value-label">
+              Height
+            </div>
+          </div>
+          <div class="currency-labeled-value">
+            <div class="currency-value">
+              46 750.00
+            </div>
+            <div class="currency-value-label">
+              Low
+            </div>
+          </div>
+          <div class="currency-labeled-value">
+            <div class="currency-value">
+              2 610.00
+            </div>
+            <div class="currency-value-label">
+              24h Vol
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mx-0 mb-5 justify-content-center">
+        <div class="col-12 col-md-auto chart-placeholder flex-grow-1 mb-3">
+          <apx-chart
+            [series]="candleChartOption?.series"
+            [chart]="candleChartOption?.chart"
+            [xaxis]="candleChartOption?.xaxis"
+            [yaxis]="candleChartOption?.yaxis"
+            [title]="candleChartOption?.title"
+          >
+          </apx-chart>
+        </div>
+        <div class="col-12 col-md-auto trade-controls mb-3">
+          <h3 class="text-center mb-3">
+            Order from
+          </h3>
+
+          <div class="radio-wrapper mb-3">
+            <div 
+              class="radio-btn"
+              *ngFor="let ofItem of orderFromList; let ofIdx = index">
+              <input 
+                type="radio"
+                [value]="ofItem"
+                name="orderFrom"
+                [(ngModel)]="orderFrom"/>
+              <div>{{ ofItem }}</div>
+            </div>
+          </div>
+          <h4 class="text-center fs-16 fw-normal mb-3">
+            Limit price
+          </h4>
+
+          <div class="mb-4">
+            <div class="input-group input-spinner">
+              <button 
+                class="btn" 
+                type="button"
+                (click)="calcLimit(-1)">
+                <i data-feather="minus"></i>
+              </button>
+              <input 
+                class="form-control" 
+                type="text" 
+                [value]="limitPrice"
+                (keyup)="onChangeLimitPrice($event)"
+                ([ngModel])="limitPrice">
+              <button 
+                class="btn" 
+                type="button"
+                (click)="calcLimit(1)">
+                <i data-feather="plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="radio-wrapper mb-4 flex-wrap">
+            <div 
+              class="radio-btn"
+              *ngFor="let pItem of percentList; let pIdx = index">
+              <input 
+                type="radio"
+                [value]="pItem"
+                name="percent"
+                [(ngModel)]="percent"/>
+              <div>{{ pItem }}%</div>
+            </div>  
+          </div>
+
+          <div class="vstack">
+            <button 
+              class="btn flex-fills-btn mb-2" 
+              type="button"
+              (click)="sell()">
+              Sell
+            </button>
+            <div class="text-center fs-10 fw-light mb-3">
+              56 345.43 USDT
+            </div>
+            <button 
+              class="btn flex-fills-btn mb-2" 
+              type="button"
+              (click)="buy()">
+              Buy
+            </button>
+            <div 
+              class="text-center fs-10 fw-light">
+              57 742.03 USDT
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mx-0 vstack flex-grow-1">
+        <h3 class="text-center mb-3">
+          Depth Chart
+        </h3>
+        <div class="col-12 chart-placeholder flex-grow-1 mb-3">
+          <apx-chart
+            [series]="depthChartOption.series"
+            [chart]="depthChartOption.chart"
+            [markers]="depthChartOption.markers"
+            [stroke]="depthChartOption.stroke"
+            [dataLabels]="depthChartOption.dataLabels"
+            [title]="depthChartOption.title"
+          >
+          </apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-5">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <h3 class="text-center mb-3">
+        Trades
+      </h3>
+      <table class="table-trades table table-hover table-sm table-sm-sm fs-10 fw-light">
+        <thead>
+          <tr>
+            <th class="fw-light">Time</th>
+            <th class="fw-light">Price</th>
+            <th class="fw-light">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            [ngClass]="{
+              'table-success': tItem.success,
+              'table-danger': !tItem.success
+            }"
+            *ngFor="let tItem of tradeList; let tIdx = index;">
+            <td>{{ tItem.time }}</td>
+            <td>{{ tItem.price | numberWithSpace }}</td>
+            <td>{{ tItem.time | numberWithSpace }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-8 col-xl-9 col-xxl-10">
+      <h3 class="text-center mb-3">Orders book</h3>
+      <div class="d-flex">
+        <table class="table-orders-book-1 table table-hover table-sm table-sm-sm fs-10 fw-light">
+          <thead>
+            <tr>
+              <th class="fw-light">Count</th>
+              <th class="fw-light">Amount</th>
+              <th class="fw-light">Total</th>
+              <th class="fw-light">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obItem1 of orderBooks1; let ob1Idx = index;">
+              <td>{{ obItem1.count | numberWithSpace }}</td>
+              <td>{{ obItem1.amount | numberWithSpace }}</td>
+              <td>{{ obItem1.total | numberWithSpace }}</td>
+              <td>{{ obItem1.price | numberWithSpace }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table-orders-book-2 table table-hover table-sm table-sm-sm fs-10 fw-light">
+          <thead>
+            <tr>
+              <th class="fw-light">Price</th>
+              <th class="fw-light">Total</th>
+              <th class="fw-light">Amount</th>
+              <th class="fw-light">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obItem2 of orderBooks2; let ob2Idx = index;">
+              <td>{{ obItem2.count | numberWithSpace }}</td>
+              <td>{{ obItem2.amount | numberWithSpace }}</td>
+              <td>{{ obItem2.total | numberWithSpace }}</td>
+              <td>{{ obItem2.price | numberWithSpace }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-center mb-3">Orders</h3>
+      <div class="table-responsive-sm">
+        <table class="table-orders table table-hover table-sm table-sm-sm fs-10 fw-light">
+          <thead>
+            <tr>
+              <th class="fw-light">Pair</th>
+              <th class="fw-light">Context</th>
+              <th class="fw-light">Type</th>
+              <th class="fw-light">Amount</th>
+              <th class="fw-light">CCY</th>
+              <th class="fw-light">Price</th>
+              <th class="fw-light">Leverage</th>
+              <th class="fw-light">Collateral</th>
+              <th class="fw-light">Status</th>
+              <th class="fw-light">Placed</th>
+              <th class="fw-light"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let oItem of orderList; let oIdx = index;">
+              <td 
+                [ngClass]="{
+                  'positive': oItem.status,
+                  'negative': !oItem.status
+                }">{{ oItem.pair }}</td>
+              <td>{{ oItem.context }}</td>
+              <td>{{ oItem.type }}</td>
+              <td>{{ oItem.amount | numberWithSpace }}</td>
+              <td>{{ oItem.ccy }}</td>
+              <td>{{ oItem.price | numberWithSpace }}</td>
+              <td>{{ oItem.leverage }}</td>
+              <td>{{ oItem.collateral }}</td>
+              <td>{{ oItem.status ? 'Active' : 'Deactive' }}</td>
+              <td>{{ oItem.placed }}</td>
+              <td>
+                <div class="table-controls">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="customCheck1" 
+                    aria-label="tableCheckBox">
+                  <button 
+                    class="btn btn-with-icon">
+                    <i data-feather="edit-2"></i>
+                  </button>
+                  <button 
+                    class="btn btn-with-icon">
+                    <i data-feather="x-circle"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

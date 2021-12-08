@@ -1,0 +1,79 @@
+<div class="container-fluid p-0">
+  <div class="mb-4 text-center">
+    <h3>Order book</h3>
+  </div>
+  <div class="row mb-4">
+    <div class="col-4 col-lg-2">
+      <div class="form-control-container">
+        <select 
+          class="form-control form-control-lg form-select-light"
+          [(ngModel)]="pairOption">
+          <option 
+            *ngFor="let pairItem of pairList;"
+            [value]="pairItem">
+            {{ pairItem }}
+          </option>
+        </select>
+        <svg width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L8.5 7L16 1" stroke="#7C7587" stroke-width="1.25" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+    <div class="col-8 col-lg-9 offset-lg-1">
+      <div class="radio-wrapper justify-content-end">
+        <div 
+          class="radio-btn"
+          *ngFor="let ctItem of coinTypesList; let ctIdx = index">
+          <input 
+            type="radio"
+            [value]="ctItem"
+            [(ngModel)]="coinTypes"/>
+          <div>{{ ctItem }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex">
+        <table class="table-orders-book-1 table table-hover table-md-sm fw-light">
+          <thead>
+            <tr>
+              <th class="fw-light">Count</th>
+              <th class="fw-light">Amount</th>
+              <th class="fw-light">Total</th>
+              <th class="fw-light">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obItem1 of orderBooks1; let ob1Idx = index;">
+              <td>{{ obItem1.count | numberWithSpace }}</td>
+              <td>{{ obItem1.amount | numberWithSpace }}</td>
+              <td>{{ obItem1.total | numberWithSpace }}</td>
+              <td>{{ obItem1.price | numberWithSpace }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table-orders-book-2 table table-hover table-md-sm fw-light">
+          <thead>
+            <tr>
+              <th class="fw-light">Price</th>
+              <th class="fw-light">Total</th>
+              <th class="fw-light">Amount</th>
+              <th class="fw-light">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obItem2 of orderBooks2; let ob2Idx = index;">
+              <td>{{ obItem2.count | numberWithSpace }}</td>
+              <td>{{ obItem2.amount | numberWithSpace }}</td>
+              <td>{{ obItem2.total | numberWithSpace }}</td>
+              <td>{{ obItem2.price | numberWithSpace }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
