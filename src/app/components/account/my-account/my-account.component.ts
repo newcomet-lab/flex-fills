@@ -5,7 +5,7 @@ import {
   FormGroup, 
   Validators 
 } from '@angular/forms';
-import Validation from '../../utils/validation';
+import Validation from '../../../utils/validation';
 import * as Feather from 'feather-icons';
 
 @Component({
