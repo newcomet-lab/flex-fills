@@ -51,6 +51,8 @@ export class TradeIndexComponent implements OnInit {
 
   orderList: any = [];
 
+  isDepthChartVisible: any = true;
+
   @ViewChild("chart") chart?: ChartComponent;
   public depthChartOption!: Partial<ChartOptions> | any;
   public candleChartOption!: Partial<ChartOptions> | any;
