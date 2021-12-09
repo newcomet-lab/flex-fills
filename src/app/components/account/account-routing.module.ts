@@ -15,6 +15,7 @@ import { DepositeComponent } from './deposite/deposite.component';
 import { DepositeEditComponent } from './deposite-edit/deposite-edit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
+import { AuthGuard } from "../shared/directives/auth.guard";
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     children: [
       {
         path: 'account',
-        component: MyAccountComponent
+        component: MyAccountComponent,
+        canActivate: [AuthGuard]
       }, {
         path: 'security',
         component: SecurityComponent

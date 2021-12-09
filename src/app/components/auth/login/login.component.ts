@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,11 @@ export class LoginComponent implements OnInit {
   userForm!: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder, private route:Router) { }
+  constructor(
+    private fb: FormBuilder, 
+    private route:Router,
+    private authService: AuthService, 
+    private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -26,9 +32,7 @@ export class LoginComponent implements OnInit {
       password: [
         '',
         [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(40)
+          Validators.required
         ]
       ]
     });
@@ -43,9 +47,11 @@ export class LoginComponent implements OnInit {
     if (!this.userForm.valid) {
       return;
     }
-    console.log('SUCCESS' + JSON.stringify(this.userForm.value));
 
-    this.route.navigate(['/auth/login/2fa']);
+    this.authService.login({
+      email: this.userForm.value.email,
+      password: this.userForm.value.password
+    });
   }
 
   onReset() {
