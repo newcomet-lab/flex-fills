@@ -48,10 +48,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login({
-      email: this.userForm.value.email,
-      password: this.userForm.value.password
-    });
+    // this.authService.login({
+    //   email: this.userForm.value.email,
+    //   password: this.userForm.value.password
+    // });
+
+    this.route.navigate(['/auth/login/2fa']);
   }
 
   onReset() {

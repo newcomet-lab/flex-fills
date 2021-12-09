@@ -22,10 +22,14 @@ const routes: Routes = [
     path: '',
     component: AccountComponent,
     children: [
+      // {
+      //   path: 'account',
+      //   component: MyAccountComponent,
+      //   canActivate: [AuthGuard]
+      // }, 
       {
         path: 'account',
-        component: MyAccountComponent,
-        canActivate: [AuthGuard]
+        component: MyAccountComponent
       }, {
         path: 'security',
         component: SecurityComponent
