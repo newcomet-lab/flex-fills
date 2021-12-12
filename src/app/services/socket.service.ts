@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {io} from 'socket.io-client';
+import { io, Manager } from 'socket.io-client';
 
 const SERVER_URL = 'wss://streamer.cryptocompare.com';
+// const manager = new Manager();
+
 @Injectable()
 export class SocketService {
 
@@ -9,7 +11,13 @@ export class SocketService {
   private _subscriptions: any = [];
   constructor() { 
     console.log('This is Sco');
-    this.socket = io(SERVER_URL);
+    this.socket = io(SERVER_URL, { 
+      path: '/v2',
+      query: {
+        api_key: '2fd2d40469f654d86b28ad9c460633889fd20712168f9e2f7b614797ddb307ab'
+      },
+      transports: ['websocket']
+    });
     this.socket.on('connect', () => {
       console.log('=====Socket connected=======')
     })
@@ -37,6 +45,8 @@ export class SocketService {
        volume: parseFloat(_data[7]),
        price: parseFloat(_data[8])
       }
+
+      console.log('m data: ', data);
       
       const channelString = `${data.sub_type}~${data.exchange}~${data.to_sym}~${data.from_sym}`
       
@@ -120,8 +130,8 @@ export class SocketService {
   channelString!: string;
   subscribeBars(symbolInfo: any, resolution: any, updateCb: any, uid: any, resetCache: any, history: any) {
     //alert('SubscribeBars from service');
-    this.channelString = this.createChannelString(symbolInfo)
-    this.socket.emit('SubAdd', {subs: [this.channelString]})
+    this.channelString = this.createChannelString(symbolInfo);
+    this.socket.emit('SubAdd', {subs: [this.channelString]});
     let a = this.channelString;
     var newSub = {
       "channelString":a,
@@ -131,7 +141,6 @@ export class SocketService {
       lastBar: history[symbolInfo.name].lastBar,
       listener: updateCb,
     };
-    //console.log('newSub '+JSON.stringify(newSub));
     this._subscriptions.push(newSub)
   }
 
