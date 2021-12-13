@@ -222,11 +222,11 @@ export class TradingViewChartComponent implements OnInit {
       },
       subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
         console.log('subscribeBars Runnning')
-        this.socketService.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback,history)
+        // this.socketService.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback,history)
       },
       unsubscribeBars: subscriberUID => {
         console.log('unsubscribeBars Running')
-        this.socketService.unsubscribeBars(subscriberUID)
+        // this.socketService.unsubscribeBars(subscriberUID)
       },
       calculateHistoryDepth:(resolution: ResolutionString, resolutionBack: ResolutionBackValues, intervalBack: number): HistoryDepth | undefined =>{
         console.log('calculate History depth is running ');

@@ -1,33 +1,31 @@
 import { Injectable } from '@angular/core';
-import { io, Manager } from 'socket.io-client';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
-const SERVER_URL = 'wss://streamer.cryptocompare.com';
-// const manager = new Manager();
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class SocketService {
 
   private socket;
   private _subscriptions: any = [];
+  status = false;
   constructor() { 
-    console.log('This is Sco');
-    this.socket = io(SERVER_URL, { 
-      path: '/v2',
-      query: {
-        api_key: '2fd2d40469f654d86b28ad9c460633889fd20712168f9e2f7b614797ddb307ab'
-      },
-      transports: ['websocket']
+    if (!this.status) {
+      const sock = new SockJS(environment.SOCKET_URL);
+      this.socket = Stomp.over(sock);
+    }
+    
+    const _this = this;
+    this.socket?.connect({}, function (frame) {
+      _this.setConnected(true);
+      console.log('Connected: ' + frame);
+
+      // _this.socket.subscribe('/queue/order-books', function (data) {
+      //   console.log('queue/order-books: ', data.body);
+      // });
     });
-    this.socket.on('connect', () => {
-      console.log('=====Socket connected=======')
-    })
-    this.socket.on('disconnect', (e: any) => {
-      console.log('=====Socket disconnected:', e +' =======')
-    })
-    this.socket.on('error', (err: any) => {
-      console.log('====socket error', err+' =======')
-    })
-    this.socket.on('m', (e: any) => {
+    /* this.socket.on('m', (e: any) => {
       // here we get all events the CryptoCompare connection has subscribed to
       // we need to send this new data to our subscribed charts
       const _data= e.split('~')
@@ -65,12 +63,20 @@ export class SocketService {
        // update our own record of lastBar
        sub.lastBar = _lastBar
       }
-     })
+     }) */
   }
 
-  public initSocket(): void {
-    
-    
+  setConnected(connected: boolean) {
+    this.status = connected;
+  }
+
+  disconnect() {
+    if (this.socket != null) {
+      this.socket.disconnect(() => {
+        this.setConnected(false);
+        console.log('Disconnected!');
+      });
+    }
   }
 
   // Take a single trade, and subscription record, return updated bar
@@ -131,7 +137,7 @@ export class SocketService {
   subscribeBars(symbolInfo: any, resolution: any, updateCb: any, uid: any, resetCache: any, history: any) {
     //alert('SubscribeBars from service');
     this.channelString = this.createChannelString(symbolInfo);
-    this.socket.emit('SubAdd', {subs: [this.channelString]});
+    // this.socket.emit('SubAdd', {subs: [this.channelString]});
     let a = this.channelString;
     var newSub = {
       "channelString":a,
@@ -152,7 +158,7 @@ export class SocketService {
       return
     }
     var sub: any = this._subscriptions[subIndex]
-    this.socket.emit('SubRemove', {subs: [sub.channelString]})
+    // this.socket.emit('SubRemove', {subs: [sub.channelString]})
     this._subscriptions.splice(subIndex, 1)
   }
   
