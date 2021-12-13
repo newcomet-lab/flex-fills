@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule  } from '@angular/common/http';
 
 import { TradeRoutingModule } from './trade-routing.module';
@@ -20,7 +19,6 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     TradeRoutingModule,
     SharedModule,
-    NgApexchartsModule,
     HttpClientModule
   ]
 })

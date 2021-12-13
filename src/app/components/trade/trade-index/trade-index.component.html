@@ -100,14 +100,6 @@
         <div 
           class="col-7 col-md-7 chart-placeholder flex-grow-1 mb-3 p-0"
           [ngStyle]="{'height': '500px'}">
-          <!-- <apx-chart
-            [series]="candleChartOption?.series"
-            [chart]="candleChartOption?.chart"
-            [xaxis]="candleChartOption?.xaxis"
-            [yaxis]="candleChartOption?.yaxis"
-            [title]="candleChartOption?.title"
-          >
-          </apx-chart> -->
           <app-trading-view-chart></app-trading-view-chart>
         </div>
         <div class="col-5 col-md-5 trade-controls mb-3">
@@ -205,17 +197,9 @@
         </div>
         
         <div 
-          class="col-12 chart-placeholder flex-grow-1 mb-3"
+          class="col-12 chart-placeholder flex-grow-1 mb-3 p-0"
           *ngIf="isDepthChartVisible">
-          <apx-chart
-            [series]="depthChartOption.series"
-            [chart]="depthChartOption.chart"
-            [markers]="depthChartOption.markers"
-            [stroke]="depthChartOption.stroke"
-            [dataLabels]="depthChartOption.dataLabels"
-            [title]="depthChartOption.title"
-          >
-          </apx-chart>
+          <app-hc-depth-chart></app-hc-depth-chart>
         </div>
       </div>
     </div>

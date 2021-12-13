@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
-import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { AccountComponent } from './account.component';
 import { SecurityComponent } from './security/security.component';
@@ -58,7 +57,6 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     AccountRoutingModule,
-    NgApexchartsModule,
     SharedModule
   ]
 })
