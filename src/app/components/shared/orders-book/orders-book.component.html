@@ -1,0 +1,20 @@
+<table class="table-orders-book table table-hover table-sm table-sm-sm fs-10 fw-light">
+  <thead>
+    <tr>
+      <th class="fw-light">Price</th>
+      <th class="fw-light">Total</th>
+      <th class="fw-light">Amount</th>
+      <th class="fw-light">Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr 
+      *ngFor="let obItem of data; let obIdx = index;" 
+      [ngStyle]="{'background-image': calcPercentage(obItem)}">
+      <td>{{ obItem.count | numberWithSpace }}</td>
+      <td>{{ obItem.total | numberWithSpace }}</td>
+      <td>{{ obItem.amount | numberWithSpace }}</td>
+      <td>{{ obItem.price | numberWithSpace }}</td>
+    </tr>
+  </tbody>
+</table>

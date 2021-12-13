@@ -74,14 +74,14 @@ export class TradeIndexComponent implements OnInit {
       this.orderBooks1.push({
         count: 3,
         amount: 0.3409,
-        total: 0.3409,
+        total: Math.round(Math.random() * 1000),
         price: 47013
       });
 
       this.orderBooks2.push({
         count: 3,
         amount: 0.3409,
-        total: 0.3409,
+        total: Math.round(Math.random() * 1000),
         price: 47013
       });
 

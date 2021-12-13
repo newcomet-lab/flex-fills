@@ -13,6 +13,7 @@ import { TradeHistoryService } from '../../services/trade-history.service';
 import { SocketService } from '../../services/socket.service';
 import { HcDepthChartComponent } from './hc-depth-chart/hc-depth-chart.component';
 import { HcCandlestickChartComponent } from './hc-candlestick-chart/hc-candlestick-chart.component';
+import { OrdersBookComponent } from './orders-book/orders-book.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HcCandlestickChartComponent } from './hc-candlestick-chart/hc-candlesti
     NumberWithSpacePipe,
     TradingViewChartComponent,
     HcDepthChartComponent,
-    HcCandlestickChartComponent
+    HcCandlestickChartComponent,
+    OrdersBookComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { HcCandlestickChartComponent } from './hc-candlestick-chart/hc-candlesti
     NumberWithSpacePipe,
     TradingViewChartComponent,
     HcDepthChartComponent,
-    HcCandlestickChartComponent
+    HcCandlestickChartComponent,
+    OrdersBookComponent
   ],
   providers: [
     TradeHistoryService,

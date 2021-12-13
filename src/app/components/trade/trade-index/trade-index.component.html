@@ -234,42 +234,16 @@
     <div class="col-lg-8 col-xl-9 col-xxl-10">
       <h3 class="text-center mb-3">Orders book</h3>
       <div class="d-flex">
-        <table class="table-orders-book-1 table table-hover table-sm table-sm-sm fs-10 fw-light">
-          <thead>
-            <tr>
-              <th class="fw-light">Count</th>
-              <th class="fw-light">Amount</th>
-              <th class="fw-light">Total</th>
-              <th class="fw-light">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let obItem1 of orderBooks1; let ob1Idx = index;">
-              <td>{{ obItem1.count | numberWithSpace }}</td>
-              <td>{{ obItem1.amount | numberWithSpace }}</td>
-              <td>{{ obItem1.total | numberWithSpace }}</td>
-              <td>{{ obItem1.price | numberWithSpace }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="table-orders-book-2 table table-hover table-sm table-sm-sm fs-10 fw-light">
-          <thead>
-            <tr>
-              <th class="fw-light">Price</th>
-              <th class="fw-light">Total</th>
-              <th class="fw-light">Amount</th>
-              <th class="fw-light">Count</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let obItem2 of orderBooks2; let ob2Idx = index;">
-              <td>{{ obItem2.count | numberWithSpace }}</td>
-              <td>{{ obItem2.amount | numberWithSpace }}</td>
-              <td>{{ obItem2.total | numberWithSpace }}</td>
-              <td>{{ obItem2.price | numberWithSpace }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <app-orders-book
+          [data]="orderBooks1"
+          [type]="'bid'"
+          [ngStyle]="{'width': '50%'}"
+        ></app-orders-book>
+        <app-orders-book
+          [data]="orderBooks2"
+          [type]="'ask'"
+          [ngStyle]="{'width': '50%'}"
+        ></app-orders-book>
       </div>
     </div>
   </div>
