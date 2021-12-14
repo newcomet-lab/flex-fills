@@ -7,23 +7,21 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class SocketService {
 
-  private socket;
+  socket: any;
   private _subscriptions: any = [];
   status = false;
+
   constructor() { 
     if (!this.status) {
       const sock = new SockJS(environment.SOCKET_URL);
       this.socket = Stomp.over(sock);
+      this.socket.debug = null;
     }
     
     const _this = this;
-    this.socket?.connect({}, function (frame) {
+    this.socket?.connect({}, (frame: any) => {
       _this.setConnected(true);
       console.log('Connected: ' + frame);
-
-      // _this.socket.subscribe('/queue/order-books', function (data) {
-      //   console.log('queue/order-books: ', data.body);
-      // });
     });
     /* this.socket.on('m', (e: any) => {
       // here we get all events the CryptoCompare connection has subscribed to

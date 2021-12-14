@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { SocketService } from '../../../services/socket.service';
 
 @Component({
   selector: 'app-trade-index',
@@ -28,14 +29,16 @@ export class TradeIndexComponent implements OnInit {
 
   tradeList: any = [];
 
-  orderBooks1: any = [];
-  orderBooks2: any = [];
+  orderBookBids: any = [];
+  orderBookAsks: any = [];
 
   orderList: any = [];
 
   isDepthChartVisible: any = true;
 
-  constructor() {
+  orderBookSub: any;
+
+  constructor(public socketService: SocketService) {
     
   }
 
@@ -71,20 +74,6 @@ export class TradeIndexComponent implements OnInit {
         success: false
       });
 
-      this.orderBooks1.push({
-        count: 3,
-        amount: 0.3409,
-        total: Math.round(Math.random() * 1000),
-        price: 47013
-      });
-
-      this.orderBooks2.push({
-        count: 3,
-        amount: 0.3409,
-        total: Math.round(Math.random() * 1000),
-        price: 47013
-      });
-
       this.orderList.push({
         status: true, // positive, active
         pair: 'BTC/USDT',
@@ -111,7 +100,20 @@ export class TradeIndexComponent implements OnInit {
         placed: '21.08.13 04:13:04',
       });
     }
+    
+    let itv = setInterval(() => {
+      if (this.socketService.status) {
+        console.log('reconnected');
+        this.orderBookSub = this.socketService.socket.subscribe('/queue/order-books', (data: any) => {
+          this.generateOrderBookData(data);
+        });
+        clearInterval(itv);
+      }
+    }, 500);
+  }
 
+  ngOnDestroy(): void {
+    this.orderBookSub.unsubscribe();
   }
 
   calcLimit(inc: any) {
@@ -121,6 +123,37 @@ export class TradeIndexComponent implements OnInit {
   onChangeLimitPrice(e: any) {
     console.log('e.target.value: ', e.target.value);
     this.limitPrice = parseFloat(e.target.value);
+  }
+
+  generateOrderBookData(data: any) {
+    /*
+      price is the first one
+      total is count, count is always 1 for now, so total is 1
+      amount is sum(amount) until each line from the 1st line.
+      count ... for now, don't need this column. 
+    */
+    let orderBookResponse = JSON.parse(data.body);
+    let bidsAmountSum = 0;
+    let asksAmountSum = 0;
+    this.orderBookBids = orderBookResponse.bids.map((o: any) => {
+      bidsAmountSum += parseFloat(o[1]);
+      return {
+        price: parseFloat(parseFloat(o[0]).toFixed(4)),
+        total: 1,
+        amount: parseFloat(bidsAmountSum.toFixed(4)),
+        count: 1
+      }
+    });
+
+    this.orderBookAsks = orderBookResponse.asks.map((o: any) => {
+      asksAmountSum += parseFloat(o[1]);
+      return {
+        price: parseFloat(parseFloat(o[0]).toFixed(4)),
+        total: 1,
+        amount: parseFloat(asksAmountSum.toFixed(4)),
+        count: 1
+      }
+    });
   }
 
   sell() {

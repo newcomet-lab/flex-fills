@@ -13,7 +13,6 @@ import {
 } from '../../../../assets/charting-libs/charting_library/charting_library.min';
 
 import { TradeHistoryService } from '../../../services/trade-history.service';
-import { SocketService } from '../../../services/socket.service';
 const history: any = {};
 
 @Component({
@@ -92,9 +91,7 @@ export class TradingViewChartComponent implements OnInit {
     return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' ')) as LanguageCode;
   }
 
-  constructor(
-    public tradeHistory: TradeHistoryService, 
-    public socketService: SocketService) { }
+  constructor(public tradeHistory: TradeHistoryService) { }
 
   ngOnInit(): void {
     this.loadTradingViewData();
