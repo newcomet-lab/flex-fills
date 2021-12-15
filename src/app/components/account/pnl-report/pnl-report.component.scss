@@ -1,0 +1,12 @@
+
+
+.pnl-report {
+    .radio-wrapper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        height: 39px;
+    }
+
+    .date-picker {
+        max-width: 195px;
+    }
+}

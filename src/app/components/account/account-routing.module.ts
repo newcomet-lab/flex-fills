@@ -16,6 +16,7 @@ import { DepositeEditComponent } from './deposite-edit/deposite-edit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
 import { AuthGuard } from "../shared/directives/auth.guard";
+import { PnlReportComponent } from './pnl-report/pnl-report.component';
 
 const routes: Routes = [
   {
@@ -69,7 +70,10 @@ const routes: Routes = [
       }, {
         path: 'withdraw-edit/:id',
         component: WithdrawEditComponent
-      } 
+      }, {
+        path: 'pnl-report',
+        component: PnlReportComponent
+      }  
     ]
   }
 ];
