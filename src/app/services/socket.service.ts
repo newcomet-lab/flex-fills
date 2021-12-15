@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -9,20 +9,9 @@ export class SocketService {
 
   socket: any;
   private _subscriptions: any = [];
-  status = false;
 
-  constructor() { 
-    if (!this.status) {
-      const sock = new SockJS(environment.SOCKET_URL);
-      this.socket = Stomp.over(sock);
-      this.socket.debug = null;
-    }
-    
-    const _this = this;
-    this.socket?.connect({}, (frame: any) => {
-      _this.setConnected(true);
-      console.log('Connected: ' + frame);
-    });
+  constructor() {
+
     /* this.socket.on('m', (e: any) => {
       // here we get all events the CryptoCompare connection has subscribed to
       // we need to send this new data to our subscribed charts
@@ -64,64 +53,89 @@ export class SocketService {
      }) */
   }
 
-  setConnected(connected: boolean) {
-    this.status = connected;
-  }
+  tradeOrderBookConnect(): Observable<any> {
+    return new Observable((observer: any) => {
+      console.log("Initialize WebSocket Connection");
+      let ws = new SockJS(environment.SOCKET_URL);
+      this.socket = Stomp.over(ws);
+      this.socket.debug = false;
+      this.socket.connect(
+        {}, 
+        (frame: any) => {
+          console.log('trade order book connected');
+          this.socket.subscribe('/queue/order-books', (data: any) => {
+            observer.next(data);
+          });
+          //_this.socket.reconnect_delay = 2000;
+        },
+        (err: any) => {
+          observer.error(err);
+        }
+      );
+    });
+  };
 
   disconnect() {
-    if (this.socket != null) {
-      this.socket.disconnect(() => {
-        this.setConnected(false);
-        console.log('Disconnected!');
-      });
+    if (this.socket !== null) {
+      this.socket.disconnect();
     }
+    console.log("Disconnected");
   }
 
-  // Take a single trade, and subscription record, return updated bar
+  // on error, schedule a reconnection attempt
+  errorCallBack(error: any) {
+    console.log("errorCallBack -> " + error)
+    setTimeout(() => {
+      this.disconnect();
+    }, 5000);
+  }
+
+  
+  /* // Take a single trade, and subscription record, return updated bar
   updateBar(data: any, sub: any) {
     //alert('update bar from socket service ');
     var lastBar = sub.lastBar
     let resolution = sub.resolution
     if (resolution.includes('D')) {
-    // 1 day in minutes === 1440
-    resolution = 1440
+      // 1 day in minutes === 1440
+      resolution = 1440
     } else if (resolution.includes('W')) {
-    // 1 week in minutes === 10080
-    resolution = 10080
+      // 1 week in minutes === 10080
+      resolution = 10080
     }
-  var coeff = resolution * 60
+    var coeff = resolution * 60
     // console.log({coeff})
     var rounded = Math.floor(data.ts / coeff) * coeff
     var lastBarSec = lastBar.time / 1000
     var _lastBar
-    
-  if (rounded > lastBarSec) {
-    // create a new candle, use last close as open **PERSONAL CHOICE**
-    _lastBar = {
-      time: rounded * 1000,
-      open: lastBar.close,
-      high: lastBar.close,
-      low: lastBar.close,
-      close: data.price,
-      volume: data.volume
-    }
-    
+
+    if (rounded > lastBarSec) {
+      // create a new candle, use last close as open **PERSONAL CHOICE**
+      _lastBar = {
+        time: rounded * 1000,
+        open: lastBar.close,
+        high: lastBar.close,
+        low: lastBar.close,
+        close: data.price,
+        volume: data.volume
+      }
+
     } else {
-    // update lastBar candle!
-    if (data.price < lastBar.low) {
-      lastBar.low = data.price
-    } else if (data.price > lastBar.high) {
-      lastBar.high = data.price
-    }
-    
-    lastBar.volume += data.volume
-    lastBar.close = data.price
-    _lastBar = lastBar
+      // update lastBar candle!
+      if (data.price < lastBar.low) {
+        lastBar.low = data.price
+      } else if (data.price > lastBar.high) {
+        lastBar.high = data.price
+      }
+
+      lastBar.volume += data.volume
+      lastBar.close = data.price
+      _lastBar = lastBar
     }
     //console.log('_lastBar '+JSON.stringify(_lastBar));
     return _lastBar
   }
- 
+
   // takes symbolInfo object as input and creates the subscription string to send to CryptoCompare
   createChannelString(symbolInfo: any) {
     var channel = symbolInfo.name.split(/[:/]/)
@@ -138,7 +152,7 @@ export class SocketService {
     // this.socket.emit('SubAdd', {subs: [this.channelString]});
     let a = this.channelString;
     var newSub = {
-      "channelString":a,
+      "channelString": a,
       uid,
       resolution,
       symbolInfo,
@@ -158,6 +172,6 @@ export class SocketService {
     var sub: any = this._subscriptions[subIndex]
     // this.socket.emit('SubRemove', {subs: [sub.channelString]})
     this._subscriptions.splice(subIndex, 1)
-  }
-  
+  } */
+
 }

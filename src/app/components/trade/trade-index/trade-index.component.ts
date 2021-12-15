@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
 import { SocketService } from '../../../services/socket.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-trade-index',
@@ -7,9 +8,9 @@ import { SocketService } from '../../../services/socket.service';
   styleUrls: ['./trade-index.component.scss']
 })
 export class TradeIndexComponent implements OnInit {
-
-  searchKey: any = 'bt';
+  searchKey: any = '';
   marketList: any = [];
+  marketSelected: any = '';
 
   orderFrom: any = "Market";
   orderFromList: any = [
@@ -38,28 +39,14 @@ export class TradeIndexComponent implements OnInit {
 
   orderBookSub: any;
 
-  constructor(public socketService: SocketService) {
+  constructor(
+    private socketService: SocketService,
+    private zone: NgZone) {
     
   }
 
   ngOnInit(): void {
     for (let i = 0; i < 10; i++) {
-      this.marketList.push({
-        pair: 'BTC/USDT',
-        price: 45569.63,
-        change: 4.2,
-        changeStatus: 1,
-        volume: 1152007225
-      });
-
-      this.marketList.push({
-        pair: 'ETH/BTC',
-        price: 45569.63,
-        change: 0.9,
-        changeStatus: -1,
-        volume: 1152007225
-      });
-
       this.tradeList.push({
         time: '12:42:10',
         price: 47012,
@@ -100,16 +87,20 @@ export class TradeIndexComponent implements OnInit {
         placed: '21.08.13 04:13:04',
       });
     }
-    
-    let itv = setInterval(() => {
-      if (this.socketService.status) {
-        console.log('reconnected');
-        this.orderBookSub = this.socketService.socket.subscribe('/queue/order-books', (data: any) => {
+
+    // this.zone.runOutsideAngular(() => {
+      this.orderBookSub = this.socketService.tradeOrderBookConnect()
+        .subscribe((data: any) => {
+          let obj = JSON.parse(data.body);
+          if (this.marketSelected === '') {
+            this.marketSelected = obj.symbol;
+          }
           this.generateOrderBookData(data);
-        });
-        clearInterval(itv);
-      }
-    }, 500);
+          this.generateMarketsData(data);
+        }, (err: any) => {
+          console.log('err: ', err);
+        }, () =>  console.log( 'The observable stream is complete'));
+    // });
   }
 
   ngOnDestroy(): void {
@@ -133,27 +124,56 @@ export class TradeIndexComponent implements OnInit {
       count ... for now, don't need this column. 
     */
     let orderBookResponse = JSON.parse(data.body);
-    let bidsAmountSum = 0;
-    let asksAmountSum = 0;
-    this.orderBookBids = orderBookResponse.bids.map((o: any) => {
-      bidsAmountSum += parseFloat(o[1]);
-      return {
-        price: parseFloat(parseFloat(o[0]).toFixed(4)),
-        total: 1,
-        amount: parseFloat(bidsAmountSum.toFixed(4)),
-        count: 1
-      }
-    });
+    if (this.marketSelected === '' || this.marketSelected === orderBookResponse.symbol) {
+      let bidsAmountSum = 0;
+      let asksAmountSum = 0;
+      this.orderBookBids = orderBookResponse.bids.map((o: any) => {
+        bidsAmountSum += parseFloat(o[1]);
+        return {
+          price: parseFloat(parseFloat(o[0]).toFixed(4)),
+          total: parseFloat(bidsAmountSum.toFixed(4)),
+          amount: parseFloat(parseFloat(o[1]).toFixed(4)),
+          count: 1
+        }
+      });
 
-    this.orderBookAsks = orderBookResponse.asks.map((o: any) => {
-      asksAmountSum += parseFloat(o[1]);
-      return {
-        price: parseFloat(parseFloat(o[0]).toFixed(4)),
-        total: 1,
-        amount: parseFloat(asksAmountSum.toFixed(4)),
-        count: 1
-      }
-    });
+      this.orderBookAsks = orderBookResponse.asks.map((o: any) => {
+        asksAmountSum += parseFloat(o[1]);
+        return {
+          price: parseFloat(parseFloat(o[0]).toFixed(4)),
+          total: parseFloat(asksAmountSum.toFixed(4)),
+          amount: parseFloat(parseFloat(o[1]).toFixed(4)),
+          count: 1
+        }
+      });
+    }
+  }
+
+  generateMarketsData(data: any) {
+    let orderBookResponse = JSON.parse(data.body);
+    let idx = _.findIndex(this.marketList, { pair: orderBookResponse.symbol });
+
+    if (idx !== -1) {
+      this.marketList[idx] = {
+        pair: orderBookResponse.symbol,
+        price: 45569.63,
+        change: 4.2,
+        changeStatus: Math.round((Math.random() * 100)) % 2 === 1 ? 1 : -1,
+        volume: orderBookResponse.bids.length
+      };
+    } else {
+      this.marketList.push({
+        pair: orderBookResponse.symbol,
+        price: 45569.63,
+        change: 4.2,
+        changeStatus: Math.round((Math.random() * 100)) % 2 === 1 ? 1 : -1,
+        volume: orderBookResponse.bids.length
+      });
+    }
+  }
+
+  getMarketList():any {
+    return this.marketList.filter((o: any) => o.pair.includes(this.searchKey));
   }
 
   sell() {

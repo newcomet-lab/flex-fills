@@ -25,7 +25,12 @@
       <h3 class="text-center mb-3">
         Markets
       </h3>
-      <div class="table-responsive">
+      <div
+        class="table-responsive"
+        [ngStyle]="{
+          'height': '730px',
+          'overflow-y': 'auto'
+        }">
         <table class="table table-hover table-sm table-sm-sm fs-10 fw-light">
           <thead>
             <tr>
@@ -36,13 +41,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let mItem of marketList; let mIdx = index;">
+            <tr 
+              *ngFor="let mItem of getMarketList(); let mIdx = index;"
+              [ngClass]="{
+                'tr-selected': marketSelected === mItem.pair
+              }"
+              (click)="marketSelected = mItem.pair">
               <td>{{ mItem.pair }}</td>
               <td>{{ mItem.volume | numberWithSpace }}</td>
               <td>{{ mItem.price | numberWithSpace }}</td>
               <td [ngClass]="{
                 'td-success': mItem.changeStatus > 0,
-                'td-danger': mItem.changeStatus <0 
+                'td-danger': mItem.changeStatus < 0 
               }">
                 {{ mItem.changeStatus > 0 ? '+' : '-' }}{{ mItem.change }}%
               </td>
@@ -58,7 +68,7 @@
             class="currency-logo" 
             src="assets/img/currency/btc_icon.png" 
             alt="currency logo">
-          <h3 class="currency-name">BTC/USDT</h3>
+          <h3 class="currency-name">{{ marketSelected }}</h3>
           <div class="currency-info">i</div>
         </div>
         <div class="panel-center">
