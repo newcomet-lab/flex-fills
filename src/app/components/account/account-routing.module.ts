@@ -17,6 +17,7 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
 import { AuthGuard } from "../shared/directives/auth.guard";
 import { PnlReportComponent } from './pnl-report/pnl-report.component';
+import { ClearingDashboardComponent } from './clearing-dashboard/clearing-dashboard.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,9 @@ const routes: Routes = [
       }, {
         path: 'pnl-report',
         component: PnlReportComponent
+      }, {
+        path: 'clearing-dashboard',
+        component: ClearingDashboardComponent
       }  
     ]
   }

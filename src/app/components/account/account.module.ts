@@ -27,6 +27,7 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WithdrawEditComponent } from './withdraw-edit/withdraw-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { PnlReportComponent } from './pnl-report/pnl-report.component';
+import { ClearingDashboardComponent } from './clearing-dashboard/clearing-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { PnlReportComponent } from './pnl-report/pnl-report.component';
     DepositeEditComponent,
     WithdrawComponent,
     WithdrawEditComponent,
-    PnlReportComponent
+    PnlReportComponent,
+    ClearingDashboardComponent
   ],
   imports: [
     CommonModule,
