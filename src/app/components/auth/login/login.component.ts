@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
 
       this.subs = actionSubject.subscribe((action: Action) => {
         if (action.type === '[Auth API] Login API Success') {
+          // this.tokenStorage.saveToken('tokendddd');
           route.navigate(['/auth/login/2fa']);
         }
 
