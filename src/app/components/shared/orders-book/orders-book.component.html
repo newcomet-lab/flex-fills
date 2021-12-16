@@ -1,6 +1,6 @@
 <table class="table-orders-book table table-hover table-sm table-sm-sm fs-10 fw-light">
   <thead>
-    <tr>
+    <tr *ngIf="type !== 'bid'">
       <th 
         class="fw-light"
         width="30%">
@@ -17,6 +17,23 @@
         Amount
       </th>
     </tr>
+    <tr *ngIf="type === 'bid'">
+      <th 
+        class="fw-light"
+        width="40%">
+        Amount
+      </th>
+      <th 
+        class="fw-light"
+        width="30%">
+        Total
+      </th>
+      <th 
+        class="fw-light"
+        width="30%">
+        Price
+      </th>
+    </tr>
   </thead>
   <tbody>
     <tr 
@@ -25,9 +42,9 @@
         'background-image': calcPercentage(obItem),
         'transition': 'all 1s'
       }">
-      <td>{{ obItem.price | numberWithSpace }}</td>
+      <td>{{ type !== 'bid' ? obItem.price : obItem.amount | numberWithSpace }}</td>
       <td>{{ obItem.total | numberWithSpace }}</td>
-      <td>{{ obItem.amount | numberWithSpace }}</td>
+      <td>{{ type !== 'bid' ? obItem.amount : obItem.price | numberWithSpace }}</td>
     </tr>
   </tbody>
 </table>
