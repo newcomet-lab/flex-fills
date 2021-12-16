@@ -31,8 +31,8 @@ export class AuthService {
   }
 
   // Sign-in
-  login(user: any) {
-    return this.http.post<any>(`${this.endpoint}/login`, user)
+  login(credential: any) {
+    /* return this.http.post<any>(`${this.endpoint}/login`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token);
         this.router.navigate(['/account']);
@@ -40,7 +40,10 @@ export class AuthService {
         //   this.currentUser = res;
         //   this.router.navigate(['user-profile/' + res.msg._id]);
         // })
-      })
+      }) */
+    return this.http
+      .post<any>(`${this.endpoint}/login`, credential)
+      .pipe(map((user) => user || {}));
   }
 
   getToken() {

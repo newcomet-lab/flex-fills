@@ -6,6 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './components/auth/auth.module';
 import { AccountModule } from './components/account/account.module';
 import { MarketsModule } from './components/markets/markets.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './store/reducers';
+import { AuthEffect } from './store/effects/auth.effect';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,9 @@ import { MarketsModule } from './components/markets/markets.module';
     BrowserAnimationsModule,
     AuthModule,
     AccountModule,
-    MarketsModule
+    MarketsModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AuthEffect])
   ],
   providers: [],
   bootstrap: [AppComponent]
