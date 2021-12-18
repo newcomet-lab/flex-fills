@@ -34,6 +34,12 @@ export class TradeIndexComponent implements OnInit {
   orderBookAsks: any = [];
 
   orderList: any = [];
+  orderOption: any = 'Orders';
+  orderOptionList: any = [
+    'Orders',
+    'Trades',
+    'Holdings'
+  ];
 
   isDepthChartVisible: any = true;
 

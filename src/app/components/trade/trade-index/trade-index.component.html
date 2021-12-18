@@ -1,68 +1,13 @@
-<div class="container-fluid p-0">
-  <div class="row mb-1">
-    <div class="col-lg-4 col-xl-3 col-xxl-2">
-      <div class="form-input-search form-input-search-lg mb-4">
-        <svg
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M0.624941 7.0834C0.624941 10.6594 3.47719 13.5418 6.9755 13.5418C10.4738 13.5418 13.326 10.6594 13.326 7.0834C13.326 3.50745 10.4738 0.625 6.9755 0.625C3.47719 0.625 0.624941 3.50745 0.624941 7.0834Z"
-            stroke="#7C7587" stroke-width="1.25" />
-          <path
-            d="M10.9502 12.1189C10.704 11.8769 10.6976 11.4782 10.9358 11.2283C11.174 10.9785 11.5666 10.9722 11.8127 11.2141L10.9502 12.1189ZM15.2034 14.5475C15.4496 14.7895 15.4561 15.1882 15.2179 15.438C14.9797 15.6879 14.5871 15.6942 14.3409 15.4522L15.2034 14.5475ZM11.8127 11.2141L15.2034 14.5475L14.3409 15.4522L10.9502 12.1189L11.8127 11.2141Z"
-            fill="#7C7587" />
-        </svg>
-        <input 
-          class="form-control form-control-lg" 
-          type="text" 
-          name="searchKey" 
-          placeholder="Search"
-          [(ngModel)]="searchKey" />
-      </div>
-      <h3 class="text-center mb-3">
-        Markets
-      </h3>
-      <div
-        class="table-responsive"
-        [ngStyle]="{
-          'height': '460px',
-          'overflow-y': 'auto'
-        }">
-        <table class="table table-hover table-sm table-sm-sm fs-10 fw-light">
-          <thead>
-            <tr>
-              <th class="fw-light">Pair</th>
-              <th class="fw-light">Volume</th>
-              <th class="fw-light">Price</th>
-              <th class="fw-light">24H Cng</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr 
-              *ngFor="let mItem of getMarketList(); let mIdx = index;"
-              [ngClass]="{
-                'tr-selected': marketSelected === mItem.pair
-              }"
-              (click)="marketSelected = mItem.pair">
-              <td>{{ mItem.pair }}</td>
-              <td>{{ mItem.volume | numberWithSpace }}</td>
-              <td>{{ mItem.price | numberWithSpace }}</td>
-              <td [ngClass]="{
-                'td-success': mItem.changeStatus > 0,
-                'td-danger': mItem.changeStatus < 0 
-              }">
-                {{ mItem.changeStatus > 0 ? '+' : '-' }}{{ mItem.change }}%
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-lg-8 col-xl-9 col-xxl-10 vstack">
-      <div class="panel mb-4">
+<div class="container-fluid p-0 trade-container">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="panel mt-3">
+        <a
+          class="new-tab" 
+          href="/trade"
+          target="_blank">
+          VIEW ANOTHER ASSET
+        </a>
         <div class="panel-left">
           <img 
             class="currency-logo" 
@@ -106,34 +51,170 @@
           </div>
         </div>
       </div>
-      <div class="row mx-0 mb-1 justify-content-center">
-        <div 
-          class="col-7 col-md-7 chart-placeholder flex-grow-1 mb-3 p-0"
-          [ngStyle]="{'height': '500px'}">
-          <app-trading-view-chart></app-trading-view-chart>
-        </div>
-        <div class="col-5 col-md-5 trade-controls mb-3">
-          <h3 class="text-center mb-3">
-            Order from
-          </h3>
-
-          <div class="radio-wrapper mb-3">
-            <div 
-              class="radio-btn"
-              *ngFor="let ofItem of orderFromList; let ofIdx = index">
-              <input 
-                type="radio"
-                [value]="ofItem"
-                name="orderFrom"
-                [(ngModel)]="orderFrom"/>
-              <div>{{ ofItem }}</div>
+    </div>
+    <div class="col-lg-7 col-md-6 col-sm-12">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="section-bar d-flex justify-content-between align-items-center">
+            <div class="title">ORDERS</div>
+            <div class="options">
+              <span 
+                *ngFor="let ooItem of orderOptionList; let ooIdx = index;" 
+                [ngClass]="{
+                  'active': ooItem === orderOption
+                }"
+                (click)="orderOption = ooItem">
+                {{ ooItem }}
+              </span>
             </div>
           </div>
-          <h4 class="text-center fs-16 fw-normal mb-3">
-            Limit price
+          <div class="table-responsive-sm orders fixed-header">
+            <table class="table-orders table table-hover table-sm table-sm-sm fs-10 fw-light mb-0">
+              <thead>
+                <tr>
+                  <th class="fw-light">Pair</th>
+                  <th class="fw-light">Context</th>
+                  <th class="fw-light">Type</th>
+                  <th class="fw-light">Amount</th>
+                  <th class="fw-light">CCY</th>
+                  <th class="fw-light">Price</th>
+                  <th class="fw-light">Leverage</th>
+                  <th class="fw-light">Collateral</th>
+                  <th class="fw-light">Status</th>
+                  <th class="fw-light">Placed</th>
+                  <th class="fw-light"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let oItem of orderList; let oIdx = index;">
+                  <td 
+                    [ngClass]="{
+                      'positive': oItem.status,
+                      'negative': !oItem.status
+                    }">{{ oItem.pair }}</td>
+                  <td>{{ oItem.context }}</td>
+                  <td>{{ oItem.type }}</td>
+                  <td>{{ oItem.amount | numberWithSpace }}</td>
+                  <td>{{ oItem.ccy }}</td>
+                  <td>{{ oItem.price | numberWithSpace }}</td>
+                  <td>{{ oItem.leverage }}</td>
+                  <td>{{ oItem.collateral }}</td>
+                  <td>{{ oItem.status ? 'Active' : 'Deactive' }}</td>
+                  <td>{{ oItem.placed }}</td>
+                  <td>
+                    <div class="table-controls">
+                      <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="customCheck1" 
+                        aria-label="tableCheckBox">
+                      <button 
+                        class="btn btn-with-icon">
+                        <i data-feather="edit-2"></i>
+                      </button>
+                      <button 
+                        class="btn btn-with-icon">
+                        <i data-feather="x-circle"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="section-bar d-flex justify-content-between align-items-center">
+            <div class="title">
+              CHART 
+              <span [ngStyle]="{
+                'color': '#7C7587'
+              }">
+                {{ marketSelected }}
+              </span>
+            </div>
+            <div class="options">
+            </div>
+          </div>
+          <div 
+            class="chart-placeholder p-0 mb-2"
+            [ngStyle]="{'height': '500px'}">
+            <app-trading-view-chart></app-trading-view-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-md-6 col-sm-12">
+      <div class="row form-table-side">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="section-bar d-flex justify-content-between align-items-center">
+            <div class="title">TRADES</div>
+            <div class="options">
+            </div>
+          </div>
+          <div class="table-responsive-sm trades fixed-header mb-2">
+            <table class="table-trades table table-hover table-sm table-sm-sm fs-10 fw-light mb-0">
+              <thead>
+                <tr>
+                  <th class="fw-light">Time</th>
+                  <th class="fw-light">Price</th>
+                  <th class="fw-light">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr 
+                  [ngClass]="{
+                    'table-success': tItem.success,
+                    'table-danger': !tItem.success
+                  }"
+                  *ngFor="let tItem of tradeList; let tIdx = index;">
+                  <td>{{ tItem.time }}</td>
+                  <td>{{ tItem.price | numberWithSpace }}</td>
+                  <td>{{ tItem.time | numberWithSpace }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="section-bar d-flex justify-content-between align-items-center">
+            <div class="title">ORDER BOOKS</div>
+            <div class="options">
+            </div>
+          </div>
+          <app-orders-book
+            [data]="orderBookBids"
+            [type]="'bid'"
+            [ngStyle]="{'width': '50%'}"
+          ></app-orders-book>
+          <app-orders-book
+            [data]="orderBookAsks"
+            [type]="'ask'"
+            [ngStyle]="{'width': '50%'}"
+          ></app-orders-book>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="section-bar d-flex justify-content-between align-items-center mb-2">
+            <div class="title">ORDER FORMS</div>
+            <div class="options">
+            </div>
+          </div>
+          <div class="trade-controls mb-2">
+            <div class="radio-wrapper d-flex justify-content-between align-items-center">
+              <div 
+                class="radio-btn"
+                *ngFor="let ofItem of orderFromList; let ofIdx = index">
+                <input 
+                  type="radio"
+                  [value]="ofItem"
+                  name="orderFrom"
+                  [(ngModel)]="orderFrom"/>
+                <div>{{ ofItem }}</div>
+              </div>
+            </div>
+          </div>
+          <h4 class="text-center fs-12 fw-normal mb-1">
+            LIMIT PRICE
           </h4>
-
-          <div class="mb-4">
+          <div class="mb-2">
             <div class="input-group input-spinner">
               <button 
                 class="btn" 
@@ -155,8 +236,7 @@
               </button>
             </div>
           </div>
-
-          <div class="radio-wrapper mb-4 flex-wrap">
+          <div class="radio-wrapper mb-2 flex-wrap">
             <div 
               class="radio-btn"
               *ngFor="let pItem of percentList; let pIdx = index">
@@ -168,15 +248,14 @@
               <div>{{ pItem }}%</div>
             </div>  
           </div>
-
-          <div class="vstack">
+          <div class="vstack mb-2">
             <button 
               class="btn flex-fills-btn mb-2" 
               type="button"
               (click)="sell()">
               Sell
             </button>
-            <div class="text-center fs-10 fw-light mb-3">
+            <div class="text-center fs-10 fw-light mb-2">
               56 345.43 USDT
             </div>
             <button 
@@ -190,129 +269,63 @@
               57 742.03 USDT
             </div>
           </div>
+          <div class="section-bar d-flex justify-content-between align-items-center mb-2">
+            <div class="title">MARKETS</div>
+            <div class="options">
+            </div>
+          </div>
+          <div class="form-input-search form-input-search-sm mb-2">
+            <svg
+              width="16" 
+              height="16" 
+              viewBox="0 0 16 16" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0.624941 7.0834C0.624941 10.6594 3.47719 13.5418 6.9755 13.5418C10.4738 13.5418 13.326 10.6594 13.326 7.0834C13.326 3.50745 10.4738 0.625 6.9755 0.625C3.47719 0.625 0.624941 3.50745 0.624941 7.0834Z"
+                stroke="#7C7587" stroke-width="1.25" />
+              <path
+                d="M10.9502 12.1189C10.704 11.8769 10.6976 11.4782 10.9358 11.2283C11.174 10.9785 11.5666 10.9722 11.8127 11.2141L10.9502 12.1189ZM15.2034 14.5475C15.4496 14.7895 15.4561 15.1882 15.2179 15.438C14.9797 15.6879 14.5871 15.6942 14.3409 15.4522L15.2034 14.5475ZM11.8127 11.2141L15.2034 14.5475L14.3409 15.4522L10.9502 12.1189L11.8127 11.2141Z"
+                fill="#7C7587" />
+            </svg>
+            <input 
+              class="form-control form-control-lg" 
+              type="text" 
+              name="searchKey" 
+              placeholder="Search"
+              [(ngModel)]="searchKey" />
+          </div>
+          <div class="table-responsive-sm markets fixed-header">
+            <table class="table table-hover table-sm table-sm-sm fs-10 fw-light mb-0">
+              <thead>
+                <tr>
+                  <th class="fw-light">Pair</th>
+                  <th class="fw-light">Volume</th>
+                  <th class="fw-light">Price</th>
+                  <th class="fw-light">24H Cng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr 
+                  *ngFor="let mItem of getMarketList(); let mIdx = index;"
+                  [ngClass]="{
+                    'tr-selected': marketSelected === mItem.pair
+                  }"
+                  (click)="marketSelected = mItem.pair">
+                  <td>{{ mItem.pair }}</td>
+                  <td>{{ mItem.volume | numberWithSpace }}</td>
+                  <td>{{ mItem.price | numberWithSpace }}</td>
+                  <td [ngClass]="{
+                    'td-success': mItem.changeStatus > 0,
+                    'td-danger': mItem.changeStatus < 0 
+                  }">
+                    {{ mItem.changeStatus > 0 ? '+' : '-' }}{{ mItem.change }}%
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <!-- <div class="row mx-0 vstack flex-grow-1">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <span></span>
-          <h3>
-            Depth Chart
-          </h3>
-          <span
-            [ngStyle]="{'cursor': 'pointer'}" 
-            (click)="isDepthChartVisible = !isDepthChartVisible">
-            
-            {{ isDepthChartVisible ? 'Close' : 'Open' }}
-          </span>
-        </div>
-        
-        <div 
-          class="col-12 chart-placeholder flex-grow-1 mb-3 p-0"
-          *ngIf="isDepthChartVisible">
-          <app-hc-depth-chart></app-hc-depth-chart>
-        </div>
-      </div> -->
-    </div>
-  </div>
-  <div class="row mb-1">
-    <div class="col-lg-4 col-xl-3 col-xxl-2">
-      <h3 class="text-center mb-3">
-        Trades
-      </h3>
-      <table class="table-trades table table-hover table-sm table-sm-sm fs-10 fw-light">
-        <thead>
-          <tr>
-            <th class="fw-light">Time</th>
-            <th class="fw-light">Price</th>
-            <th class="fw-light">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr 
-            [ngClass]="{
-              'table-success': tItem.success,
-              'table-danger': !tItem.success
-            }"
-            *ngFor="let tItem of tradeList; let tIdx = index;">
-            <td>{{ tItem.time }}</td>
-            <td>{{ tItem.price | numberWithSpace }}</td>
-            <td>{{ tItem.time | numberWithSpace }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-lg-8 col-xl-9 col-xxl-10">
-      <h3 class="text-center mb-3">Orders book</h3>
-      <div class="d-flex">
-        <app-orders-book
-          [data]="orderBookBids"
-          [type]="'bid'"
-          [ngStyle]="{'width': '50%'}"
-        ></app-orders-book>
-        <app-orders-book
-          [data]="orderBookAsks"
-          [type]="'ask'"
-          [ngStyle]="{'width': '50%'}"
-        ></app-orders-book>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <h3 class="text-center mb-3">Orders</h3>
-      <div class="table-responsive-sm">
-        <table class="table-orders table table-hover table-sm table-sm-sm fs-10 fw-light">
-          <thead>
-            <tr>
-              <th class="fw-light">Pair</th>
-              <th class="fw-light">Context</th>
-              <th class="fw-light">Type</th>
-              <th class="fw-light">Amount</th>
-              <th class="fw-light">CCY</th>
-              <th class="fw-light">Price</th>
-              <th class="fw-light">Leverage</th>
-              <th class="fw-light">Collateral</th>
-              <th class="fw-light">Status</th>
-              <th class="fw-light">Placed</th>
-              <th class="fw-light"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let oItem of orderList; let oIdx = index;">
-              <td 
-                [ngClass]="{
-                  'positive': oItem.status,
-                  'negative': !oItem.status
-                }">{{ oItem.pair }}</td>
-              <td>{{ oItem.context }}</td>
-              <td>{{ oItem.type }}</td>
-              <td>{{ oItem.amount | numberWithSpace }}</td>
-              <td>{{ oItem.ccy }}</td>
-              <td>{{ oItem.price | numberWithSpace }}</td>
-              <td>{{ oItem.leverage }}</td>
-              <td>{{ oItem.collateral }}</td>
-              <td>{{ oItem.status ? 'Active' : 'Deactive' }}</td>
-              <td>{{ oItem.placed }}</td>
-              <td>
-                <div class="table-controls">
-                  <input 
-                    type="checkbox" 
-                    class="form-check-input" 
-                    id="customCheck1" 
-                    aria-label="tableCheckBox">
-                  <button 
-                    class="btn btn-with-icon">
-                    <i data-feather="edit-2"></i>
-                  </button>
-                  <button 
-                    class="btn btn-with-icon">
-                    <i data-feather="x-circle"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>

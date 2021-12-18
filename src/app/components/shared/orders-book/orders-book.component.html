@@ -1,50 +1,38 @@
-<table class="table-orders-book table table-hover table-sm table-sm-sm fs-10 fw-light">
-  <thead>
-    <tr *ngIf="type !== 'bid'">
-      <th 
-        class="fw-light"
-        width="30%">
-        Price
-      </th>
-      <th 
-        class="fw-light"
-        width="30%">
-        Total
-      </th>
-      <th 
-        class="fw-light"
-        width="40%">
-        Amount
-      </th>
-    </tr>
-    <tr *ngIf="type === 'bid'">
-      <th 
-        class="fw-light"
-        width="40%">
-        Amount
-      </th>
-      <th 
-        class="fw-light"
-        width="30%">
-        Total
-      </th>
-      <th 
-        class="fw-light"
-        width="30%">
-        Price
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr 
-      *ngFor="let obItem of data; let obIdx = index;" 
-      [ngStyle]="{
-        'background-image': calcPercentage(obItem),
-        'transition': 'all 1s'
-      }">
-      <td>{{ type !== 'bid' ? obItem.price : obItem.amount | numberWithSpace }}</td>
-      <td>{{ obItem.total | numberWithSpace }}</td>
-      <td>{{ type !== 'bid' ? obItem.amount : obItem.price | numberWithSpace }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive-sm table-orders-book fixed-header">
+  <table class="table table-hover table-sm table-sm-sm fs-10 fw-light mb-0">
+    <thead>
+      <tr *ngIf="type === 'bid'">
+        <th 
+          class="fw-light"
+          width="40%">
+          Amount
+        </th>
+        <th 
+          class="fw-light"
+          width="30%">
+          Total
+        </th>
+        <th 
+          class="fw-light"
+          width="30%">
+          Price
+        </th>
+      </tr>
+      <tr>
+        <td colspan="3">{{ type === 'bid' ? 'Bids' : 'Asks' }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr 
+        *ngFor="let obItem of data; let obIdx = index;" 
+        [ngStyle]="{
+          'background-image': calcPercentage(obItem),
+          'transition': 'all 1s'
+        }">
+        <td>{{ type !== 'bid' ? obItem.price : obItem.amount | numberWithSpace }}</td>
+        <td>{{ obItem.total | numberWithSpace }}</td>
+        <td>{{ type !== 'bid' ? obItem.amount : obItem.price | numberWithSpace }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
