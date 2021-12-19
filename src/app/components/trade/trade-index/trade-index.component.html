@@ -1,57 +1,5 @@
 <div class="container-fluid p-0 trade-container">
   <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
-      <div class="panel mt-3">
-        <a
-          class="new-tab" 
-          href="/trade"
-          target="_blank">
-          VIEW ANOTHER ASSET
-        </a>
-        <div class="panel-left">
-          <img 
-            class="currency-logo" 
-            src="assets/img/currency/btc_icon.png" 
-            alt="currency logo">
-          <h3 class="currency-name">{{ marketSelected }}</h3>
-          <div class="currency-info">i</div>
-        </div>
-        <div class="panel-center">
-          <div class="currency-value currency-value-lg">
-            48,549
-          </div>
-          <div class="currency-change change-positive">
-            1,799.00 (3.80%)
-          </div>
-        </div>
-        <div class="panel-right">
-          <div class="currency-labeled-value">
-            <div class="currency-value">
-              49 250.00
-            </div>
-            <div class="currency-value-label">
-              Height
-            </div>
-          </div>
-          <div class="currency-labeled-value">
-            <div class="currency-value">
-              46 750.00
-            </div>
-            <div class="currency-value-label">
-              Low
-            </div>
-          </div>
-          <div class="currency-labeled-value">
-            <div class="currency-value">
-              2 610.00
-            </div>
-            <div class="currency-value-label">
-              24h Vol
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-lg-7 col-md-6 col-sm-12">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
@@ -124,16 +72,61 @@
           </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="section-bar d-flex justify-content-between align-items-center">
+          <div class="section-bar chart-strip d-flex align-items-center">
             <div class="title">
-              CHART 
-              <span [ngStyle]="{
-                'color': '#7C7587'
-              }">
-                {{ marketSelected }}
-              </span>
+              CHART
             </div>
-            <div class="options">
+            <div class="options d-flex justify-content-between align-items-center">
+              <div class="p-left">
+                <img 
+                  class="currency-logo" 
+                  src="assets/img/currency/btc_icon.png" 
+                  alt="currency logo">
+                <h5 class="currency-name">BTC/USD</h5>
+                <div class="chart-currency-info">i</div>
+              </div>
+              <div class="p-right">
+                <a
+                  class="new-tab" 
+                  href="/trade/asset-view"
+                  target="_blank">
+                  VIEW ANOTHER ASSET
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="section-bar chart-changes d-flex justify-content-center align-items-center">
+            <div class="p-center">
+              <div class="currency-value currency-value-lg">
+                48,549
+              </div>
+              <div class="currency-change change-positive">
+                1,799.00 (3.80%)
+              </div>
+              <div class="currency-labeled-value">
+                <div class="currency-value">
+                  49 250.00
+                </div>
+                <div class="currency-value-label">
+                  Height
+                </div>
+              </div>
+              <div class="currency-labeled-value">
+                <div class="currency-value">
+                  46 750.00
+                </div>
+                <div class="currency-value-label">
+                  Low
+                </div>
+              </div>
+              <div class="currency-labeled-value">
+                <div class="currency-value">
+                  2 610.00
+                </div>
+                <div class="currency-value-label">
+                  24h Vol
+                </div>
+              </div>
             </div>
           </div>
           <div 
@@ -181,13 +174,13 @@
             </div>
           </div>
           <app-orders-book
-            [data]="orderBookBids"
-            [type]="'bid'"
+            [data]="orderBookAsks"
+            [type]="'ask'"
             [ngStyle]="{'width': '50%'}"
           ></app-orders-book>
           <app-orders-book
-            [data]="orderBookAsks"
-            [type]="'ask'"
+            [data]="orderBookBids"
+            [type]="'bid'"
             [ngStyle]="{'width': '50%'}"
           ></app-orders-book>
         </div>

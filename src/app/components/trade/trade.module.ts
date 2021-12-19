@@ -7,11 +7,13 @@ import { TradeRoutingModule } from './trade-routing.module';
 import { TradeComponent } from './trade.component';
 import { TradeIndexComponent } from './trade-index/trade-index.component';
 import { SharedModule } from '../shared/shared.module';
+import { TradeAssetViewComponent } from './trade-asset-view/trade-asset-view.component';
 
 @NgModule({
   declarations: [
     TradeComponent,
-    TradeIndexComponent
+    TradeIndexComponent,
+    TradeAssetViewComponent
   ],
   imports: [
     CommonModule,

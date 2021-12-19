@@ -29,25 +29,12 @@
         background: linear-gradient(
             90deg, 
             rgba(151, 0, 209, 0.5) 0%, 
-            rgb(207, 8, 131) 0%, 
-            rgba(15, 48, 238, 0.5) 50%, 
+            #de00dcad 0%, 
+            #de00dcad 50%, 
             rgb(64 48 92) 100%
         );
-        background-size: 400% 400%;
-        animation: gradient 5s ease infinite;
-
-        .new-tab {
-            position: absolute;
-            right: 0;
-            color: white;
-            top: -30px;
-            background: green;
-            cursor: pointer;
-            padding: 5px;
-            border-top-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            text-decoration: none;
-        }
+        // background-size: 400% 400%;
+        // animation: gradient 5s ease infinite;
     }
 
     .orders,
@@ -84,6 +71,10 @@
     }
 
     .vstack {
+        div {
+            color: #d8d7c8;
+        }
+
         button {
             width: 100%;
             min-width: unset !important;
@@ -106,14 +97,121 @@
     }
 
     .markets {
-        height: 452px;
+        height: 480px;
     }
+
+    .chart-strip {
+        .options {
+            width: calc(100% - 45px);
+
+            .p-left {
+                display: flex;
+                align-items: center;
+                margin-left: 10px;
+
+                .currency-logo {
+                    width: 21px;
+                    margin-right: 5px;
+                }
+    
+                .currency-name {
+                    margin-bottom: 0px;
+                    margin-right: 5px;
+                }
+    
+                .chart-currency-info {
+                    background:linear-gradient(180deg,#be00d8,#5200c4);
+                    border-radius:50%;
+                    color:#fff;
+                    cursor:pointer;
+                    font-size:16px;
+                    font-weight:500;
+                    height:19px;
+                    line-height:19px;
+                    text-align:center;
+                    width:19px;
+                    margin-right: 5px;
+                }
+            }
+
+            .p-right {
+                .new-tab {
+                    color: white;
+                    background: green;
+                    cursor: pointer;
+                    padding: 5px;
+                    border-top-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                    text-decoration: none;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .chart-changes {
+        background: linear-gradient(
+            90deg, 
+            #de00da4d 0%, 
+            rgba(64, 48, 92, 0.5) 50%, 
+            rgba(64, 48, 92, 0.5) 50%, 
+            #de00da4d 100%);
+        // background-size: 400% 400%;
+        // animation: gradient 5s ease infinite;
+
+        .p-center {
+            display: flex;
+            align-items: center;
+
+            .currency-value {
+                color: white;
+                font-size: 14px;
+                margin-right: 10px;
+            }
+
+            .currency-change {
+                position: relative;
+                margin-right: 15px;
+            }
+
+            .currency-change::before {
+                top: 6px;
+            }
+
+            .currency-labeled-value {
+                div {
+                    font-size: 11px;
+                    line-height: 11px;
+                }
+
+                .currency-value-label {
+                    color: #6c6f87;
+                }
+            }
+        }
+    }
+
+    
 }
 
 @media screen and (max-width: 768px) {
-    .form-table-side > * {
-        padding-left: 8px;
-        padding-right: 8px;
+    .trade-container {
+        .form-table-side > * {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .trade-container {
+        .radio-wrapper {
+            .radio-btn {
+                margin: auto;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        }
     }
 }
 

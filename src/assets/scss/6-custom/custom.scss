@@ -637,15 +637,21 @@
         border: 0;
         text-align: center;
         padding: 7px;
+        font-size: 11px;
+      }
+
+      td {
+        color: $light-white-color;
       }
     }
 
     tbody {
       tr {
         td {
-          color: $dark-text-color;
+          color: $light-white-color !important;
           text-align: center;
           border-bottom: 0;
+          font-size: 11px;
 
           &.td-success {
             color: $success !important;

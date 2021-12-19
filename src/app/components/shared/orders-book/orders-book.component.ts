@@ -31,12 +31,18 @@ export class OrdersBookComponent implements OnInit {
         rgba(0, 192, 135, 0.2) ${parseFloat((100 - percentage).toFixed(4))}%, 
         rgba(0, 192, 135, 0.2) 100% )`;
     } else {
+      // return `linear-gradient( 
+      //   to right, 
+      //   rgba(192, 0, 104, 0.1) 0%, 
+      //   rgba(192, 0, 104, 0.1) ${parseFloat(percentage.toFixed(4))}%, 
+      //   rgba(0, 0, 0, 0) ${parseFloat(percentage.toFixed(4))}%, 
+      //   rgba(0, 0, 0, 0) 100% )`;
       return `linear-gradient( 
         to right, 
-        rgba(192, 0, 104, 0.1) 0%, 
-        rgba(192, 0, 104, 0.1) ${parseFloat(percentage.toFixed(4))}%, 
-        rgba(0, 0, 0, 0) ${parseFloat(percentage.toFixed(4))}%, 
-        rgba(0, 0, 0, 0) 100% )`;
+        rgba(0, 0, 0, 0) 0%, 
+        rgba(0, 0, 0, 0) ${parseFloat((100 - percentage).toFixed(4))}%, 
+        rgba(192, 0, 104, 0.1) ${parseFloat((100 - percentage).toFixed(4))}%, 
+        rgba(192, 0, 104, 0.1) 100% )`;
     }
   }
 

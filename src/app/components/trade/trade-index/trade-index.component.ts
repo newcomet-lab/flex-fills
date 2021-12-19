@@ -94,19 +94,17 @@ export class TradeIndexComponent implements OnInit {
       });
     }
 
-    // this.zone.runOutsideAngular(() => {
-      this.orderBookSub = this.socketService.tradeOrderBookConnect()
-        .subscribe((data: any) => {
-          let obj = JSON.parse(data.body);
-          if (this.marketSelected === '') {
-            this.marketSelected = obj.symbol;
-          }
-          this.generateOrderBookData(data);
-          this.generateMarketsData(data);
-        }, (err: any) => {
-          console.log('err: ', err);
-        }, () =>  console.log( 'The observable stream is complete'));
-    // });
+    this.orderBookSub = this.socketService.tradeOrderBookConnect()
+      .subscribe((data: any) => {
+        let obj = JSON.parse(data.body);
+        if (this.marketSelected === '') {
+          this.marketSelected = obj.symbol;
+        }
+        this.generateOrderBookData(data);
+        this.generateMarketsData(data);
+      }, (err: any) => {
+        console.log('err: ', err);
+      }, () =>  console.log( 'The observable stream is complete'));
   }
 
   ngOnDestroy(): void {
@@ -151,7 +149,7 @@ export class TradeIndexComponent implements OnInit {
           amount: parseFloat(parseFloat(o[1]).toFixed(4)),
           count: 1
         }
-      });
+      }).reverse();
     }
   }
 

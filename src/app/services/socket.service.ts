@@ -59,6 +59,8 @@ export class SocketService {
       let ws = new SockJS(environment.SOCKET_URL);
       this.socket = Stomp.over(ws);
       this.socket.debug = false;
+      this.socket.heartbeat.incoming = 20000;
+      this.socket.heartbeat.outcoming = 20000;
       this.socket.connect(
         {}, 
         (frame: any) => {
