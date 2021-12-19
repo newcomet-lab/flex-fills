@@ -1,3 +1,25 @@
+.navbar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .sidebar-brand {
+        padding: 0px 0px;
+        width: 220px;
+    }
+
+    .navbar-menu-links-container {
+        .nav-btn {
+            padding: 2px;
+            min-width: 100px;
+
+            svg {
+                margin-top: 3px;
+                width: 22px;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 992px) {
     .nv-hide {
         display: none !important;
