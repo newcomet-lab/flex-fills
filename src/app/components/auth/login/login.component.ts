@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
 
         if (action.type === '[Auth API] Login API Failed') {
           route.navigate(['/auth/login/2fa']);
-        }
-     });
+        } 
+     }); 
     }
 
   ngOnInit(): void {
