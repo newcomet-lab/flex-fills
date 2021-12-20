@@ -59,8 +59,6 @@ export class SocketService {
       let ws = new SockJS(environment.SOCKET_URL);
       this.socket = Stomp.over(ws);
       this.socket.debug = false;
-      this.socket.heartbeat.incoming = 20000;
-      this.socket.heartbeat.outcoming = 20000;
       this.socket.connect(
         {}, 
         (frame: any) => {
@@ -68,7 +66,7 @@ export class SocketService {
           this.socket.subscribe('/queue/order-books', (data: any) => {
             observer.next(data);
           });
-          //_this.socket.reconnect_delay = 2000;
+          // this.ping(this);
         },
         (err: any) => {
           observer.error(err);
@@ -92,6 +90,16 @@ export class SocketService {
     }, 5000);
   }
 
+  // ping(self: any) {
+  //   console.log('this.socket.connected: ', self.socket.connected);
+  //   if (!self.socket) return;
+  //   if (!self.socket.connected) return;
+  //   self.socket.send("ping");
+  //   console.log('sent ping');
+  //   setTimeout(() => {
+  //     self.ping(self);
+  //   }, 500);
+  // }  
   
   /* // Take a single trade, and subscription record, return updated bar
   updateBar(data: any, sub: any) {

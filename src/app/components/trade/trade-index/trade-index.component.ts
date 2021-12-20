@@ -94,6 +94,10 @@ export class TradeIndexComponent implements OnInit {
       });
     }
 
+    this.createOrderBookSubscribe();
+  }
+
+  createOrderBookSubscribe() {
     this.orderBookSub = this.socketService.tradeOrderBookConnect()
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
