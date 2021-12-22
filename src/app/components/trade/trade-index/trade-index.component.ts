@@ -2,9 +2,6 @@ import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Store, select, ActionsSubject, Action } from '@ngrx/store';
-import { 
-  serverInfoSuccessAction
-} from '../../../store/actions/common.action';
 import { selectServerInfo } from '../../../store/reducers/common.reducer';
 import { CommonEffect } from '../../../store/effects/common.effect';
 import { SocketService } from '../../../services/socket.service';
