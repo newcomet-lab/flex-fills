@@ -53,7 +53,7 @@ export class SocketService {
      }) */
   }
 
-  tradeOrderBookConnect(url: any): Observable<any> {
+  socketConnect(url: any): Observable<any> {
     return new Observable((observer: any) => {
       console.log("Initialize WebSocket Connection");
       let ws = new SockJS(url);
@@ -62,16 +62,30 @@ export class SocketService {
       this.socket.connect(
         {}, 
         (frame: any) => {
-          console.log('trade order book connected');
-          this.socket.subscribe('/queue/order-books', (data: any) => {
-            observer.next(data);
-          });
-          // this.ping(this);
+          observer.next(frame);
         },
         (err: any) => {
           observer.error(err);
         }
       );
+    });
+  }
+
+  tradeOrderBookConnect(): Observable<any> {
+    return new Observable((observer: any) => {
+      console.log("order-books channel subscribed");
+      this.socket.subscribe('/queue/order-books', (data: any) => {
+        observer.next(data);
+      });
+    });
+  };
+
+  tradeMarketsConnect(): Observable<any> {
+    return new Observable((observer: any) => {
+      console.log('trade channel subscribed');
+      this.socket.subscribe('/queue/trades', (data: any) => {
+        observer.next(data);
+      });
     });
   };
 

@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Store, select, ActionsSubject, Action } from '@ngrx/store';
 import { selectServerInfo } from '../../../store/reducers/common.reducer';
-import { CommonEffect } from '../../../store/effects/common.effect';
 import { SocketService } from '../../../services/socket.service';
 import * as _ from 'lodash';
 
@@ -49,6 +47,7 @@ export class TradeIndexComponent implements OnInit {
   isDepthChartVisible: any = true;
 
   orderBookSub: any;
+  marketsSub: any;
 
   subs: any;
   serverInfo$: any;
@@ -58,7 +57,6 @@ export class TradeIndexComponent implements OnInit {
   constructor(
     private socketService: SocketService,
     private store: Store<{ user: any }>,
-    private commonEffect : CommonEffect,
     private actionSubject: ActionsSubject) {
       this.serverInfo$ = this.store.pipe(select(selectServerInfo));
 
@@ -66,8 +64,16 @@ export class TradeIndexComponent implements OnInit {
         if (action.type === '[Common API] Server Info API Success') {
           this.serverInfo$.pipe(take(1)).subscribe((info: any) =>{
             this.websocketUrl = info['websocket-url'];
-            this.createOrderBookSubscribe();
-          });
+            this.socketService.socketConnect(this.websocketUrl)
+              .subscribe((frame: any) => {
+                console.log('socket connected: ', frame);
+
+                this.createOrderBookSubscribe();
+                this.createMarketsSubscribe();
+              }, (err: any) => {
+                console.log('socket connection err: ', err);
+              }, () =>  console.log( 'The observable stream is complete'));;
+            });
         }
       });
   }
@@ -117,12 +123,13 @@ export class TradeIndexComponent implements OnInit {
   }
 
   createOrderBookSubscribe() {
-    this.orderBookSub = this.socketService.tradeOrderBookConnect(this.websocketUrl)
+    this.orderBookSub = this.socketService.tradeOrderBookConnect()
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
         if (this.marketSelected === '') {
           this.marketSelected = obj.symbol;
         }
+        // console.log('orders obj: ', obj);
         this.generateOrderBookData(data);
         this.generateMarketsData(data);
       }, (err: any) => {
@@ -130,8 +137,19 @@ export class TradeIndexComponent implements OnInit {
       }, () =>  console.log( 'The observable stream is complete'));
   }
 
+  createMarketsSubscribe() {
+    this.marketsSub = this.socketService.tradeMarketsConnect()
+      .subscribe((data: any) => {
+        let obj = JSON.parse(data.body);
+        console.log('markets obj: ', obj);
+      }, (err: any) => {
+        console.log('err: ', err);
+      }, () =>  console.log( 'The observable stream is complete'));
+  }
+
   ngOnDestroy(): void {
     this.orderBookSub.unsubscribe();
+    this.marketsSub.unsubscribe();
   }
 
   calcLimit(inc: any) {
