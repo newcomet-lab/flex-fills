@@ -53,10 +53,10 @@ export class SocketService {
      }) */
   }
 
-  tradeOrderBookConnect(): Observable<any> {
+  tradeOrderBookConnect(url: any): Observable<any> {
     return new Observable((observer: any) => {
       console.log("Initialize WebSocket Connection");
-      let ws = new SockJS(environment.SOCKET_URL);
+      let ws = new SockJS(url);
       this.socket = Stomp.over(ws);
       this.socket.debug = false;
       this.socket.connect(

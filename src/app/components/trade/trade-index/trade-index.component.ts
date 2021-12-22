@@ -1,4 +1,12 @@
 import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
+import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Store, select, ActionsSubject, Action } from '@ngrx/store';
+import { 
+  serverInfoSuccessAction
+} from '../../../store/actions/common.action';
+import { selectServerInfo } from '../../../store/reducers/common.reducer';
+import { CommonEffect } from '../../../store/effects/common.effect';
 import { SocketService } from '../../../services/socket.service';
 import * as _ from 'lodash';
 
@@ -45,10 +53,26 @@ export class TradeIndexComponent implements OnInit {
 
   orderBookSub: any;
 
+  subs: any;
+  serverInfo$: any;
+
+  websocketUrl: any = '';
+
   constructor(
     private socketService: SocketService,
-    private zone: NgZone) {
-    
+    private store: Store<{ user: any }>,
+    private commonEffect : CommonEffect,
+    private actionSubject: ActionsSubject) {
+      this.serverInfo$ = this.store.pipe(select(selectServerInfo));
+
+      this.subs = actionSubject.subscribe((action: Action) => {
+        if (action.type === '[Common API] Server Info API Success') {
+          this.serverInfo$.pipe(take(1)).subscribe((info: any) =>{
+            this.websocketUrl = info['websocket-url'];
+            this.createOrderBookSubscribe();
+          });
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -93,12 +117,10 @@ export class TradeIndexComponent implements OnInit {
         placed: '21.08.13 04:13:04',
       });
     }
-
-    this.createOrderBookSubscribe();
   }
 
   createOrderBookSubscribe() {
-    this.orderBookSub = this.socketService.tradeOrderBookConnect()
+    this.orderBookSub = this.socketService.tradeOrderBookConnect(this.websocketUrl)
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
         if (this.marketSelected === '') {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Auth } from '../models/auth';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -32,15 +31,6 @@ export class AuthService {
 
   // Sign-in
   login(credential: any) {
-    /* return this.http.post<any>(`${this.endpoint}/login`, user)
-      .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.token);
-        this.router.navigate(['/account']);
-        // this.getUserProfile(res._id).subscribe((res) => {
-        //   this.currentUser = res;
-        //   this.router.navigate(['user-profile/' + res.msg._id]);
-        // })
-      }) */
     return this.http
       .post<any>(`${this.endpoint}/login`, credential)
       .pipe(map((user) => user || {}));

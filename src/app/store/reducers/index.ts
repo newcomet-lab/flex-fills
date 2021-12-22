@@ -1,13 +1,13 @@
 import { ActionReducerMap } from "@ngrx/store";
 import { authReducer, AuthState } from "./auth.reducer";
-// import { cartReducer, CartState } from "./cart.reducer";
+import { commonReducer, CommonState } from "./common.reducer";
 
 interface AppState {
   authState: AuthState;
-  // cartState: CartState;
+  commonState: CommonState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   authState: authReducer,
-  // cartState: cartReducer
+  commonState: commonReducer
 };
