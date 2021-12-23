@@ -67,15 +67,7 @@ export class TradeIndexComponent implements OnInit {
           this.serverInfo$.pipe(take(1)).subscribe((info: any) => {
             this.maxNoOfTradeToDisplay = parseInt(info['max-number-of-trades-to-display']);
 
-            this.socketService.socketConnect(environment.SOCKET_URL)
-            .subscribe((frame: any) => {
-              console.log('socket connected: ', frame);
-
-              this.createOrderBookSubscribe();
-              this.createTradesSubscribe();
-            }, (err: any) => {
-              console.log('socket connection err: ', err);
-            }, () =>  console.log( 'The observable stream is complete'));
+            this.startStreaming();
           });
         }
       });
@@ -111,6 +103,22 @@ export class TradeIndexComponent implements OnInit {
     }
   }
 
+  startStreaming() {
+    this.socketService.socketConnect(environment.SOCKET_URL)
+      .subscribe((frame: any) => {
+        console.log('socket connected: ', frame);
+
+        this.createOrderBookSubscribe();
+        this.createTradesSubscribe();
+      }, (err: any) => {
+        console.log('socket connection err: ', err);
+        setTimeout(() => {
+          console.log('try to re-connect...');
+          this.startStreaming();
+        }, 1000);
+      }, () =>  console.log( 'The observable stream is complete'));
+  }
+
   createOrderBookSubscribe() {
     this.orderBookSub = this.socketService.tradeOrderBookConnect()
       .subscribe((data: any) => {
@@ -118,10 +126,9 @@ export class TradeIndexComponent implements OnInit {
         if (this.marketSelected === '') {
           this.marketSelected = obj.symbol;
         }
-        setTimeout(() => {
-          this.generateOrderBookData(data);
-          this.generateMarketsData(data);
-        }, 500);
+        
+        this.generateOrderBookData(data);
+        this.generateMarketsData(data);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
@@ -131,9 +138,8 @@ export class TradeIndexComponent implements OnInit {
     this.tradesSub = this.socketService.tradeMarketsConnect()
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
-        setTimeout(() => {
-          this.generateTradesData(data);
-        }, 500);
+        
+        this.generateTradesData(data);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
