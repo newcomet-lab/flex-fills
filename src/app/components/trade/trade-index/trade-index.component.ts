@@ -138,7 +138,7 @@ export class TradeIndexComponent implements OnInit {
     this.tradesSub = this.socketService.tradeMarketsConnect()
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
-        
+
         this.generateTradesData(data);
       }, (err: any) => {
         console.log('err: ', err);
@@ -204,6 +204,13 @@ export class TradeIndexComponent implements OnInit {
         changeStatus: Math.round((Math.random() * 100)) % 2 === 1 ? 1 : -1,
         volume: orderBookResponse.bids.length
       });
+    } else {
+      this.marketList[idx] = {
+        ...this.marketList[idx],
+        change: 4.2,
+        changeStatus: Math.round((Math.random() * 100)) % 2 === 1 ? 1 : -1,
+        volume: orderBookResponse.bids.length
+      };
     }
   }
 
@@ -231,8 +238,6 @@ export class TradeIndexComponent implements OnInit {
       symbol: tradesResponse.symbol
     });
 
-    tradeList = tradeList.slice(0, this.maxNoOfTradeToDisplay);
-
     this.tradeList = tradeList;
 
     /* In markets table, update the price with the last trade price of that pair */
@@ -253,7 +258,7 @@ export class TradeIndexComponent implements OnInit {
   }
 
   getTradeList():any {
-    return this.tradeList.filter((o: any) => o.symbol === this.marketSelected);
+    return this.tradeList.filter((o: any) => o.symbol === this.marketSelected).slice(0, this.maxNoOfTradeToDisplay);
   }
 
   getOrdersBookAsksList():any {
