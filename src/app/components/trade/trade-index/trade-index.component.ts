@@ -32,7 +32,7 @@ export class TradeIndexComponent implements OnInit {
 
   limitPrice: any = 21245.432;
 
-  tradeList: any = [];
+  tradeGroupList: any = {};
 
   orderBookBids: any = [];
   orderBookAsks: any = [];
@@ -221,24 +221,29 @@ export class TradeIndexComponent implements OnInit {
   generateTradesData(data: any) {
     let tradesResponse = JSON.parse(data.body);
 
-    let tradeList = Object.assign([], this.tradeList);
-
     let tradeDate = new Date(tradesResponse.eventTime * 1000);
     let hours = tradeDate.getHours();
     var minutes = "0" + tradeDate.getMinutes();
     var seconds = "0" + tradeDate.getSeconds();
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-    tradeList.unshift({
-      time: formattedTime,
-      price: tradesResponse.price,
-      amount: tradesResponse.quantity,
-      success: tradesResponse.tradeSide === 'BUY',
-      market: tradesResponse.exchange,
-      symbol: tradesResponse.symbol
-    });
+    let tradeGroupList = Object.assign({}, this.tradeGroupList);
 
-    this.tradeList = tradeList;
+    if (tradeGroupList.hasOwnProperty(tradesResponse.symbol)) {
+      tradeGroupList[tradesResponse.symbol].unshift({
+        time: formattedTime,
+        price: tradesResponse.price,
+        amount: tradesResponse.quantity,
+        success: tradesResponse.tradeSide === 'BUY',
+        market: tradesResponse.exchange,
+        symbol: tradesResponse.symbol
+      });
+    } else {
+      tradeGroupList[tradesResponse.symbol] = [];
+    }
+
+    tradeGroupList[tradesResponse.symbol] = tradeGroupList[tradesResponse.symbol].slice(0, this.maxNoOfTradeToDisplay);
+    this.tradeGroupList = tradeGroupList;
 
     /* In markets table, update the price with the last trade price of that pair */
 
@@ -258,7 +263,9 @@ export class TradeIndexComponent implements OnInit {
   }
 
   getTradeList():any {
-    return this.tradeList.filter((o: any) => o.symbol === this.marketSelected).slice(0, this.maxNoOfTradeToDisplay);
+    return this.tradeGroupList.hasOwnProperty(this.marketSelected) 
+      ? this.tradeGroupList[this.marketSelected] 
+      : [];
   }
 
   getOrdersBookAsksList():any {
