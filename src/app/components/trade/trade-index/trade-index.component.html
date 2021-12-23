@@ -141,7 +141,9 @@
       <div class="row form-table-side">
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="section-bar d-flex justify-content-between align-items-center">
-            <div class="title">TRADES</div>
+            <div class="title">
+              TRADES ({{ marketSelected }})
+            </div>
             <div class="options">
               <span 
                [ngStyle]="{
@@ -177,17 +179,17 @@
             </table>
           </div>
           <div class="section-bar d-flex justify-content-between align-items-center">
-            <div class="title">ORDER BOOKS</div>
+            <div class="title">ORDER BOOKS ({{ marketSelected }})</div>
             <div class="options">
             </div>
           </div>
           <app-orders-book
-            [data]="orderBookAsks"
+            [data]="getOrdersBookAsksList()"
             [type]="'ask'"
             [ngStyle]="{'width': '50%'}"
           ></app-orders-book>
           <app-orders-book
-            [data]="orderBookBids"
+            [data]="getOrdersBookBidsList()"
             [type]="'bid'"
             [ngStyle]="{'width': '50%'}"
           ></app-orders-book>
@@ -315,7 +317,7 @@
                   (click)="marketSelected = mItem.pair">
                   <td>{{ mItem.pair }}</td>
                   <td>{{ mItem.volume | numberWithSpace }}</td>
-                  <td>{{ mItem.price | numberWithSpace }}</td>
+                  <td>{{  mItem.price ? (mItem.price | numberWithSpace) : '' }}</td>
                   <td [ngClass]="{
                     'td-success': mItem.changeStatus > 0,
                     'td-danger': mItem.changeStatus < 0 

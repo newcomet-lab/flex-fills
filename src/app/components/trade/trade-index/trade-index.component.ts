@@ -118,8 +118,10 @@ export class TradeIndexComponent implements OnInit {
         if (this.marketSelected === '') {
           this.marketSelected = obj.symbol;
         }
-        this.generateOrderBookData(data);
-        this.generateMarketsData(data);
+        setTimeout(() => {
+          this.generateOrderBookData(data);
+          this.generateMarketsData(data);
+        }, 2000);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
@@ -129,7 +131,9 @@ export class TradeIndexComponent implements OnInit {
     this.tradesSub = this.socketService.tradeMarketsConnect()
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
-        this.generateTradesData(data);
+        setTimeout(() => {
+          this.generateTradesData(data);
+        }, 2000);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
@@ -145,7 +149,6 @@ export class TradeIndexComponent implements OnInit {
   }
 
   onChangeLimitPrice(e: any) {
-    console.log('e.target.value: ', e.target.value);
     this.limitPrice = parseFloat(e.target.value);
   }
 
@@ -166,7 +169,8 @@ export class TradeIndexComponent implements OnInit {
           price: parseFloat(parseFloat(o[0]).toFixed(4)),
           total: parseFloat(bidsAmountSum.toFixed(4)),
           amount: parseFloat(parseFloat(o[1]).toFixed(4)),
-          count: 1
+          count: 1,
+          symbol: orderBookResponse.symbol
         }
       });
 
@@ -176,7 +180,8 @@ export class TradeIndexComponent implements OnInit {
           price: parseFloat(parseFloat(o[0]).toFixed(4)),
           total: parseFloat(asksAmountSum.toFixed(4)),
           amount: parseFloat(parseFloat(o[1]).toFixed(4)),
-          count: 1
+          count: 1,
+          symbol: orderBookResponse.symbol
         }
       }).reverse();
     }
@@ -186,18 +191,9 @@ export class TradeIndexComponent implements OnInit {
     let orderBookResponse = JSON.parse(data.body);
     let idx = _.findIndex(this.marketList, { pair: orderBookResponse.symbol });
 
-    if (idx !== -1) {
-      this.marketList[idx] = {
-        pair: orderBookResponse.symbol,
-        price: 45569.63,
-        change: 4.2,
-        changeStatus: Math.round((Math.random() * 100)) % 2 === 1 ? 1 : -1,
-        volume: orderBookResponse.bids.length
-      };
-    } else {
+    if (idx === -1) {
       this.marketList.push({
         pair: orderBookResponse.symbol,
-        price: 45569.63,
         change: 4.2,
         changeStatus: Math.round((Math.random() * 100)) % 2 === 1 ? 1 : -1,
         volume: orderBookResponse.bids.length
@@ -232,10 +228,34 @@ export class TradeIndexComponent implements OnInit {
     tradeList = tradeList.slice(0, this.maxNoOfTradeToDisplay);
 
     this.tradeList = tradeList;
+
+    /* In markets table, update the price with the last trade price of that pair */
+
+    let marketList = Object.assign([], this.marketList);
+    marketList = marketList.map((o: any) => {
+      if (o.pair === tradesResponse.symbol) {
+        return {
+          ...o,
+          price: tradesResponse.price
+        };
+      }
+
+      return o;
+    });
+
+    this.marketList = marketList;
   }
 
   getTradeList():any {
-    return this.tradeList.filter((o: any) => o.symbol.includes(this.searchKey));
+    return this.tradeList.filter((o: any) => o.symbol === this.marketSelected);
+  }
+
+  getOrdersBookAsksList():any {
+    return this.orderBookAsks.filter((o: any) => o.symbol === this.marketSelected);
+  }
+
+  getOrdersBookBidsList():any {
+    return this.orderBookBids.filter((o: any) => o.symbol === this.marketSelected);
   }
 
   sell() {
