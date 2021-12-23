@@ -191,7 +191,10 @@
         }
     }
 
-    
+    .table-trades tr.table-success td:first-child:before, 
+    .table-trades tr.table-danger td:first-child:before {
+        left: 1px;
+    }
 }
 
 @media screen and (max-width: 768px) {

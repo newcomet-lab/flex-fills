@@ -143,6 +143,12 @@
           <div class="section-bar d-flex justify-content-between align-items-center">
             <div class="title">TRADES</div>
             <div class="options">
+              <span 
+               [ngStyle]="{
+                 'color': 'white'
+               }">
+                TOP {{ maxNoOfTradeToDisplay }}
+              </span>
             </div>
           </div>
           <div class="table-responsive-sm trades fixed-header mb-2">
@@ -152,18 +158,20 @@
                   <th class="fw-light">Time</th>
                   <th class="fw-light">Price</th>
                   <th class="fw-light">Amount</th>
+                  <th class="fw-light">Market</th>
                 </tr>
               </thead>
               <tbody>
                 <tr 
                   [ngClass]="{
-                    'table-success': tItem.success,
-                    'table-danger': !tItem.success
+                    'table-success': ttItem.success,
+                    'table-danger': !ttItem.success
                   }"
-                  *ngFor="let tItem of tradeList; let tIdx = index;">
-                  <td>{{ tItem.time }}</td>
-                  <td>{{ tItem.price | numberWithSpace }}</td>
-                  <td>{{ tItem.time | numberWithSpace }}</td>
+                  *ngFor="let ttItem of getTradeList(); let ttIdx = index;">
+                  <td>{{ ttItem.time }}</td>
+                  <td>{{ ttItem.price | numberWithSpace }}</td>
+                  <td>{{ ttItem.amount | numberWithSpace }}</td>
+                  <td>{{ ttItem.market }}</td>
                 </tr>
               </tbody>
             </table>

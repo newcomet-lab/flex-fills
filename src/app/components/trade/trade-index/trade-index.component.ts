@@ -4,6 +4,7 @@ import { Store, select, ActionsSubject, Action } from '@ngrx/store';
 import { selectServerInfo } from '../../../store/reducers/common.reducer';
 import { SocketService } from '../../../services/socket.service';
 import * as _ from 'lodash';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-trade-index',
@@ -47,12 +48,13 @@ export class TradeIndexComponent implements OnInit {
   isDepthChartVisible: any = true;
 
   orderBookSub: any;
-  marketsSub: any;
+  tradesSub: any;
 
   subs: any;
   serverInfo$: any;
 
   websocketUrl: any = '';
+  maxNoOfTradeToDisplay: any = 100;
 
   constructor(
     private socketService: SocketService,
@@ -62,38 +64,25 @@ export class TradeIndexComponent implements OnInit {
 
       this.subs = actionSubject.subscribe((action: Action) => {
         if (action.type === '[Common API] Server Info API Success') {
-          this.serverInfo$.pipe(take(1)).subscribe((info: any) =>{
-            this.websocketUrl = info['websocket-url'];
-            this.socketService.socketConnect(this.websocketUrl)
-              .subscribe((frame: any) => {
-                console.log('socket connected: ', frame);
+          this.serverInfo$.pipe(take(1)).subscribe((info: any) => {
+            this.maxNoOfTradeToDisplay = parseInt(info['max-number-of-trades-to-display']);
 
-                this.createOrderBookSubscribe();
-                this.createMarketsSubscribe();
-              }, (err: any) => {
-                console.log('socket connection err: ', err);
-              }, () =>  console.log( 'The observable stream is complete'));;
-            });
+            this.socketService.socketConnect(environment.SOCKET_URL)
+            .subscribe((frame: any) => {
+              console.log('socket connected: ', frame);
+
+              this.createOrderBookSubscribe();
+              this.createTradesSubscribe();
+            }, (err: any) => {
+              console.log('socket connection err: ', err);
+            }, () =>  console.log( 'The observable stream is complete'));
+          });
         }
       });
-  }
+    }
 
   ngOnInit(): void {
     for (let i = 0; i < 10; i++) {
-      this.tradeList.push({
-        time: '12:42:10',
-        price: 47012,
-        amount: 0.0100,
-        success: true
-      });
-
-      this.tradeList.push({
-        time: '12:42:10',
-        price: 47012,
-        amount: 0.0100,
-        success: false
-      });
-
       this.orderList.push({
         status: true, // positive, active
         pair: 'BTC/USDT',
@@ -129,7 +118,6 @@ export class TradeIndexComponent implements OnInit {
         if (this.marketSelected === '') {
           this.marketSelected = obj.symbol;
         }
-        // console.log('orders obj: ', obj);
         this.generateOrderBookData(data);
         this.generateMarketsData(data);
       }, (err: any) => {
@@ -137,11 +125,11 @@ export class TradeIndexComponent implements OnInit {
       }, () =>  console.log( 'The observable stream is complete'));
   }
 
-  createMarketsSubscribe() {
-    this.marketsSub = this.socketService.tradeMarketsConnect()
+  createTradesSubscribe() {
+    this.tradesSub = this.socketService.tradeMarketsConnect()
       .subscribe((data: any) => {
         let obj = JSON.parse(data.body);
-        console.log('markets obj: ', obj);
+        this.generateTradesData(data);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
@@ -149,7 +137,7 @@ export class TradeIndexComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.orderBookSub.unsubscribe();
-    this.marketsSub.unsubscribe();
+    this.tradesSub.unsubscribe();
   }
 
   calcLimit(inc: any) {
@@ -219,6 +207,35 @@ export class TradeIndexComponent implements OnInit {
 
   getMarketList():any {
     return this.marketList.filter((o: any) => o.pair.includes(this.searchKey));
+  }
+
+  generateTradesData(data: any) {
+    let tradesResponse = JSON.parse(data.body);
+
+    let tradeList = Object.assign([], this.tradeList);
+
+    let tradeDate = new Date(tradesResponse.eventTime * 1000);
+    let hours = tradeDate.getHours();
+    var minutes = "0" + tradeDate.getMinutes();
+    var seconds = "0" + tradeDate.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    tradeList.unshift({
+      time: formattedTime,
+      price: tradesResponse.price,
+      amount: tradesResponse.quantity,
+      success: tradesResponse.tradeSide === 'BUY',
+      market: tradesResponse.exchange,
+      symbol: tradesResponse.symbol
+    });
+
+    tradeList = tradeList.slice(0, this.maxNoOfTradeToDisplay);
+
+    this.tradeList = tradeList;
+  }
+
+  getTradeList():any {
+    return this.tradeList.filter((o: any) => o.symbol.includes(this.searchKey));
   }
 
   sell() {
