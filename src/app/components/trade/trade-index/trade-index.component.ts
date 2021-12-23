@@ -121,7 +121,7 @@ export class TradeIndexComponent implements OnInit {
         setTimeout(() => {
           this.generateOrderBookData(data);
           this.generateMarketsData(data);
-        }, 2000);
+        }, 500);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
@@ -133,7 +133,7 @@ export class TradeIndexComponent implements OnInit {
         let obj = JSON.parse(data.body);
         setTimeout(() => {
           this.generateTradesData(data);
-        }, 2000);
+        }, 500);
       }, (err: any) => {
         console.log('err: ', err);
       }, () =>  console.log( 'The observable stream is complete'));
