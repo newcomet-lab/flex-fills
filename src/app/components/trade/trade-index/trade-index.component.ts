@@ -112,6 +112,10 @@ export class TradeIndexComponent implements OnInit {
         this.createTradesSubscribe();
       }, (err: any) => {
         console.log('socket connection err: ', err);
+        
+        this.orderBookSub.unsubscribe();
+        this.tradesSub.unsubscribe();
+
         setTimeout(() => {
           console.log('try to re-connect...');
           this.startStreaming();
