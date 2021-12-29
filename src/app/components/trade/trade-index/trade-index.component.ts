@@ -5,6 +5,7 @@ import { selectServerInfo } from '../../../store/reducers/common.reducer';
 import { SocketService } from '../../../services/socket.service';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
+import * as Feather from 'feather-icons';
 
 @Component({
   selector: 'app-trade-index',
@@ -38,11 +39,12 @@ export class TradeIndexComponent implements OnInit {
   orderBookAsks: any = [];
 
   orderList: any = [];
-  orderOption: any = 'Orders';
+  orderOption: any = 'Exchange Orders';
   orderOptionList: any = [
+    'Exchange Orders',
     'Orders',
     'Trades',
-    'Holdings'
+    'Balances'
   ];
 
   isDepthChartVisible: any = true;
@@ -71,36 +73,147 @@ export class TradeIndexComponent implements OnInit {
           });
         }
       });
-    }
+  }
 
   ngOnInit(): void {
-    for (let i = 0; i < 10; i++) {
-      this.orderList.push({
-        status: true, // positive, active
-        pair: 'BTC/USDT',
-        context: 'Exchange',
-        type: 'Limit',
-        amount: 3236.32,
-        ccy: 'BTC',
-        price: 434.235,
-        leverage: '-',
-        collateral: '-',
-        placed: '21.08.13 04:13:04',
-      });
+    this.generateOrdersData(this.orderOption);
+  }
 
-      this.orderList.push({
-        status: false, // positive, active
-        pair: 'BTC/USDT',
-        context: 'Exchange',
-        type: 'Limit',
-        amount: 3236.32,
-        ccy: 'BTC',
-        price: 434.235,
-        leverage: '-',
-        collateral: '-',
-        placed: '21.08.13 04:13:04',
-      });
+  ngAfterViewInit() {
+    Feather.replace();
+  }
+
+  generateOrdersData(option: any) {
+    this.orderList = [];
+    this.orderOption = option;
+
+    switch (this.orderOption) {
+      case 'Exchange Orders':
+        for (let i = 0; i < 10; i++) {
+          this.orderList.push({
+            cStatus: true, // positive, active
+            timePlaced: '12/22/2021  12:12:00 AM',
+            exchangeOrderId: '1640209500430',
+            clientId: '100002',
+            pair: 'BTC/USD',
+            exchange: 'Binance',
+            type: 'Limit',
+            side: 'BUY',
+            status: 'Active',
+            priceRequested: '45123',
+            amountRequested: '1.00',
+            priceFilled: '3451.21',
+            filledAmount: '15',
+            checkbox: true,
+            modify: false,
+            close: true
+          });
+    
+          this.orderList.push({
+            cStatus: false, // positive, active
+            timePlaced: '12/22/2021  12:12:00 AM',
+            exchangeOrderId: '1640209500430',
+            clientId: '100002',
+            pair: 'BTC/USD',
+            exchange: 'Binance',
+            type: 'Limit',
+            side: 'BUY',
+            status: 'Active',
+            priceRequested: '45123',
+            amountRequested: '1.00',
+            priceFilled: '3451.21',
+            filledAmount: '15',
+            checkbox: true,
+            modify: false,
+            close: true
+          });
+        }
+        break;
+      case 'Orders':
+        for (let i = 0; i < 10; i++) {
+          this.orderList.push({
+            cStatus: true, // positive, active
+            timePlaced: '12/22/2021  12:12:00 AM',
+            requestId: '1640209500430',
+            clientId: '100002',
+            pair: 'BTC/USD',
+            type: 'Limit',
+            side: 'BUY',
+            status: 'Active',
+            priceRequested: '45123',
+            amountRequested: '1.00',
+            priceFilled: '3451.21',
+            filledAmount: '15',
+            checkbox: true,
+            modify: false,
+            close: true
+          });
+    
+          this.orderList.push({
+            cStatus: false, // positive, active
+            timePlaced: '12/22/2021  12:12:00 AM',
+            exchangeOrderId: '1640209500430',
+            clientId: '100002',
+            pair: 'BTC/USD',
+            exchange: 'Binance',
+            type: 'Limit',
+            side: 'BUY',
+            status: 'Active',
+            priceRequested: '45123',
+            amountRequested: '1.00',
+            priceFilled: '3451.21',
+            filledAmount: '15',
+            checkbox: true,
+            modify: false,
+            close: true
+          });
+        }
+        break;
+      case 'Trades':
+        for (let i = 0; i < 10; i++) {
+          this.orderList.push({
+            cStatus: true, // positive, active
+            timeExecuted: '12/22/2021  12:12:00 AM',
+            exchangeOrderId: '1640209500430',
+            clientId: '100002',
+            exchange: 'Bitfinex',
+            pair: 'ETH/USD',
+            type: 'Market',
+            side: 'BUY',
+            priceFilled: '3451.21',
+            filledAmount: '1.00'
+          });
+    
+          this.orderList.push({
+            cStatus: false, // positive, active
+            timeExecuted: '12/22/2021  12:12:00 AM',
+            exchangeOrderId: '1640209500430',
+            clientId: '100002',
+            exchange: 'Bitfinex',
+            pair: 'ETH/USD',
+            type: 'Market',
+            side: 'BUY',
+            priceFilled: '3451.21',
+            filledAmount: '1.00'
+          });
+        }
+        break;
+      case 'Balances':
+        for (let i = 0; i < 10; i++) {
+          this.orderList.push({
+            clientId: '100002',
+            asset: 'BTC',
+            locked: '20',
+            balance: 3,
+            available: 3
+          });
+        }
+        break;
     }
+
+    setTimeout((o) => {
+      Feather.replace();
+    }, 100);
   }
 
   startStreaming() {

@@ -11,44 +11,86 @@
                 [ngClass]="{
                   'active': ooItem === orderOption
                 }"
-                (click)="orderOption = ooItem">
+                (click)="generateOrdersData(ooItem)">
                 {{ ooItem }}
               </span>
             </div>
           </div>
           <div class="table-responsive-sm orders fixed-header">
             <table class="table-orders table table-hover table-sm table-sm-sm fs-10 fw-light mb-0">
-              <thead>
+              <thead *ngIf="orderOption === 'Exchange Orders'">
                 <tr>
+                  <th class="fw-light">Time Placed</th>
+                  <th class="fw-light">Excahnge Order ID</th>
+                  <th class="fw-light">Client ID</th>
                   <th class="fw-light">Pair</th>
-                  <th class="fw-light">Context</th>
+                  <th class="fw-light">Exchange</th>
                   <th class="fw-light">Type</th>
-                  <th class="fw-light">Amount</th>
-                  <th class="fw-light">CCY</th>
-                  <th class="fw-light">Price</th>
-                  <th class="fw-light">Leverage</th>
-                  <th class="fw-light">Collateral</th>
+                  <th class="fw-light">Side</th>
                   <th class="fw-light">Status</th>
-                  <th class="fw-light">Placed</th>
+                  <th class="fw-light">Price Requested</th>
+                  <th class="fw-light">Amount Requested</th>
+                  <th class="fw-light">Price Filled</th>
+                  <th class="fw-light">Filled Amount</th>
                   <th class="fw-light"></th>
                 </tr>
               </thead>
-              <tbody>
+              <thead *ngIf="orderOption === 'Orders'">
+                <tr>
+                  <th class="fw-light">Time Placed</th>
+                  <th class="fw-light">Request ID</th>
+                  <th class="fw-light">Client ID</th>
+                  <th class="fw-light">Pair</th>
+                  <th class="fw-light">Type</th>
+                  <th class="fw-light">Side</th>
+                  <th class="fw-light">Status</th>
+                  <th class="fw-light">Price Requested</th>
+                  <th class="fw-light">Amount Requested</th>
+                  <th class="fw-light">Price Filled</th>
+                  <th class="fw-light">Filled Amount</th>
+                  <th class="fw-light"></th>
+                </tr>
+              </thead>
+              <thead *ngIf="orderOption === 'Trades'">
+                <tr>
+                  <th class="fw-light">Time Executed</th>
+                  <th class="fw-light">Exchange Order ID</th>
+                  <th class="fw-light">Client ID</th>
+                  <th class="fw-light">Exchange</th>
+                  <th class="fw-light">Pair</th>
+                  <th class="fw-light">Type</th>
+                  <th class="fw-light">Side</th>
+                  <th class="fw-light">Price Filled</th>
+                  <th class="fw-light">Filled Amount</th>
+                </tr>
+              </thead>
+              <thead *ngIf="orderOption === 'Balances'">
+                <tr>
+                  <th class="fw-light">Client ID</th>
+                  <th class="fw-light">Asset</th>
+                  <th class="fw-light">Locked</th>
+                  <th class="fw-light">Balance</th>
+                  <th class="fw-light">Available</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="orderOption === 'Exchange Orders'">
                 <tr *ngFor="let oItem of orderList; let oIdx = index;">
                   <td 
                     [ngClass]="{
-                      'positive': oItem.status,
-                      'negative': !oItem.status
-                    }">{{ oItem.pair }}</td>
-                  <td>{{ oItem.context }}</td>
+                      'positive': oItem.cStatus,
+                      'negative': !oItem.cStatus
+                    }">{{ oItem.timePlaced }}</td>
+                  <td>{{ oItem.exchangeOrderId }}</td>
+                  <td>{{ oItem.clientId }}</td>
+                  <td>{{ oItem.pair }}</td>
+                  <td>{{ oItem.exchange }}</td>
                   <td>{{ oItem.type }}</td>
-                  <td>{{ oItem.amount | numberWithSpace }}</td>
-                  <td>{{ oItem.ccy }}</td>
-                  <td>{{ oItem.price | numberWithSpace }}</td>
-                  <td>{{ oItem.leverage }}</td>
-                  <td>{{ oItem.collateral }}</td>
-                  <td>{{ oItem.status ? 'Active' : 'Deactive' }}</td>
-                  <td>{{ oItem.placed }}</td>
+                  <td>{{ oItem.side }}</td>
+                  <td>{{ oItem.status }}</td>
+                  <td>{{ oItem.priceRequested | numberWithSpace }}</td>
+                  <td>{{ oItem.amountRequested | numberWithSpace }}</td>
+                  <td>{{ oItem.priceFilled | numberWithSpace }}</td>
+                  <td>{{ oItem.filledAmount | numberWithSpace }}</td>
                   <td>
                     <div class="table-controls">
                       <input 
@@ -66,6 +108,68 @@
                       </button>
                     </div>
                   </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="orderOption === 'Orders'">
+                <tr *ngFor="let oItem of orderList; let oIdx = index;">
+                  <td 
+                    [ngClass]="{
+                      'positive': oItem.cStatus,
+                      'negative': !oItem.cStatus
+                    }">{{ oItem.timePlaced }}</td>
+                  <td>{{ oItem.requestId }}</td>
+                  <td>{{ oItem.clientId }}</td>
+                  <td>{{ oItem.pair }}</td>
+                  <td>{{ oItem.type }}</td>
+                  <td>{{ oItem.side }}</td>
+                  <td>{{ oItem.status }}</td>
+                  <td>{{ oItem.priceRequested | numberWithSpace }}</td>
+                  <td>{{ oItem.amountRequested | numberWithSpace }}</td>
+                  <td>{{ oItem.priceFilled | numberWithSpace }}</td>
+                  <td>{{ oItem.filledAmount | numberWithSpace }}</td>
+                  <td>
+                    <div class="table-controls">
+                      <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="customCheck1" 
+                        aria-label="tableCheckBox">
+                      <button 
+                        class="btn btn-with-icon">
+                        <i data-feather="edit-2"></i>
+                      </button>
+                      <button 
+                        class="btn btn-with-icon">
+                        <i data-feather="x-circle"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="orderOption === 'Trades'">
+                <tr *ngFor="let oItem of orderList; let oIdx = index;">
+                  <td 
+                    [ngClass]="{
+                      'positive': oItem.cStatus,
+                      'negative': !oItem.cStatus
+                    }">{{ oItem.timeExecuted }}</td>
+                  <td>{{ oItem.exchangeOrderId }}</td>
+                  <td>{{ oItem.clientId }}</td>
+                  <td>{{ oItem.exchange }}</td>
+                  <td>{{ oItem.pair }}</td>
+                  <td>{{ oItem.type }}</td>
+                  <td>{{ oItem.side }}</td>
+                  <td>{{ oItem.priceFilled | numberWithSpace }}</td>
+                  <td>{{ oItem.filledAmount | numberWithSpace }}</td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="orderOption === 'Balances'">
+                <tr *ngFor="let oItem of orderList; let oIdx = index;">
+                  <td>{{ oItem.clientId }}</td>
+                  <td>{{ oItem.asset }}</td>
+                  <td>{{ oItem.locked }}</td>
+                  <td>{{ oItem.balance }}</td>
+                  <td>{{ oItem.available }}</td>
                 </tr>
               </tbody>
             </table>
